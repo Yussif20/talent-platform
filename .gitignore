@@ -47,3 +47,10 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# Nested lockfiles. npm workspaces resolve from the root lockfile only; a stray one in
+# an app directory makes Vercel install that app's stale dependency tree instead of the
+# workspace, which silently omits the @talent/* packages and @supabase/ssr. Two arrived
+# with the git subtree import and crashed the deployed middleware.
+apps/*/package-lock.json
+packages/*/package-lock.json
