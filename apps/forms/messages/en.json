@@ -260,6 +260,12 @@
     "downloadPlan": "Download intervention plan",
     "keepLink": "Keep this page's link to return to this report. Anyone with the link can view it, so share it only with people you trust.",
     "notFoundTitle": "Report unavailable",
-    "notFoundBody": "This report could not be found. The link may be incomplete or the report may have been removed. Please check the full link you were given."
+    "notFoundBody": "This report could not be found. The link may be incomplete or the report may have been removed. Please check the full link you were given.",
+    "emailLabel": "Email this report to yourself",
+    "emailPlaceholder": "you@example.com",
+    "emailSend": "Send",
+    "emailSent": "Sent. Check your inbox.",
+    "emailFailed": "Could not send the email. Please try again.",
+    "emailUnavailable": "Email delivery is not configured for this deployment. You can still download the report above."
   }
 }

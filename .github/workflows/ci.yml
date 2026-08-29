@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      # Proves the extracted scoring still reproduces the eight copies of the reduce that
+      # were inlined in the two form pages. No database needed.
+      - name: Scoring parity
+        run: npm run test:scoring
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      # Builds need the NEXT_PUBLIC_* values present at compile time, since Next inlines
+      # them into the client bundle. Placeholders are fine: nothing connects during a build.
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-anon-key

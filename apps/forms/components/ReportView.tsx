@@ -12,6 +12,7 @@ import {
   type DisabilityCode,
 } from "@talent/domain";
 import type { ReportData } from "@talent/db";
+import EmailReport from "./EmailReport";
 
 /**
  * The personalised screening report.
@@ -31,9 +32,11 @@ import type { ReportData } from "@talent/db";
 export default function ReportView({
   report,
   locale,
+  token,
 }: {
   report: ReportData;
   locale: string;
+  token: string;
 }) {
   const t = useTranslations("Report");
   const printRef = useRef<HTMLDivElement>(null);
@@ -196,6 +199,8 @@ export default function ReportView({
             </a>
           )}
         </div>
+
+        <EmailReport id={report.id} token={token} locale={locale} />
 
         <p className="mt-6 text-center text-xs text-gray-500 dark:text-gray-400 max-w-md mx-auto leading-relaxed">
           {t("keepLink")}

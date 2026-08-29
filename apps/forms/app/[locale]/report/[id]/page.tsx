@@ -44,7 +44,13 @@ export default async function ReportPage({
     return <ReportMissing title={tr("notFoundTitle")} body={tr("notFoundBody")} />;
   }
 
-  return <ReportView report={data as unknown as ReportData} locale={locale} />;
+  return (
+    <ReportView
+      report={data as unknown as ReportData}
+      locale={locale}
+      token={token}
+    />
+  );
 }
 
 function ReportMissing({ title, body }: { title: string; body: string }) {
