@@ -1,3 +1,14 @@
+> **Historical document — describes the system before the Supabase migration.**
+>
+> Kept because it records the contract the rebuild had to reproduce, and because the
+> proxy pattern it describes is still the shape of `/api/statistics`. Everything below
+> referring to `virilan362-001-site1.rtempurl.com` is a backend that no longer exists;
+> that route now calls the Postgres function `get_statistics_summary()`.
+>
+> For the current architecture see the [root README](../README.md).
+
+---
+
 # TalentBridge Statistics Dashboard - API Architecture & Data Flow
 
 ## 📋 Executive Summary
