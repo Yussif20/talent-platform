@@ -1,0 +1,121 @@
+{
+  "Statistics": {
+    "pageTitle": "Assessment Statistics Dashboard",
+    "pageSubtitle": "Comprehensive analysis of TalentBridge assessment results",
+    "loading": "Loading statistics...",
+    "error": "Failed to load statistics",
+    "retry": "Retry",
+    "exportExcel": "Export to Excel",
+    "downloadingExcel": "Downloading...",
+    "lastUpdated": "Last updated",
+    "filterByDate": "Filter by Date Range",
+    "applyFilter": "Apply Filter",
+    "clearFilter": "Clear Filter",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "allTime": "All Time",
+
+    "kpis": {
+      "totalParticipants": "Total Participants",
+      "percentageDisabled": "Percentage Disabled",
+      "percentageDualExceptional": "Dual Exceptional Rate",
+      "averageTalent": "Average Talent Score",
+      "averageDisability": "Average Disability Score"
+    },
+
+    "sections": {
+      "overview": "Overview",
+      "surveyTypes": "Survey Type Distribution",
+      "categories": "Category Distribution",
+      "disabilities": "Disability Breakdown",
+      "demographics": "Demographics",
+      "genderDistribution": "Gender Distribution",
+      "ageDistribution": "Age Group Distribution",
+      "dualExceptionalAge": "Dual Exceptional Age Distribution",
+      "satisfaction": "User Satisfaction",
+      "dualExceptionalBySurveyType": "Dual Exceptional by Survey Type"
+    },
+
+    "categories": {
+      "disabledOnly": "Disabled Only",
+      "talentedOnly": "Talented Only",
+      "dualExceptional": "Dual Exceptional",
+      "neither": "Neither"
+    },
+
+    "surveyTypes": {
+      "parents": "Parents",
+      "teachers": "Teachers"
+    },
+
+    "demographics": {
+      "male": "Male",
+      "female": "Female",
+      "overall": "Overall",
+      "talented": "Talented",
+      "disabled": "Disabled"
+    },
+
+    "disabilityTypes": {
+      "ADHD": "ADHD",
+      "Borderline-Intelligence": "Borderline Intelligence",
+      "Hearing-Impairment": "Hearing Impairment",
+      "Learning-Disabilities": "Learning Disabilities",
+      "Visual-Impairment-Braille": "Visual Impairment (Braille)",
+      "Physical-Disability": "Physical Disability",
+      "Multiple-Disabilities": "Multiple Disabilities",
+      "Mild-Intellectual-Disability": "Mild Intellectual Disability",
+      "Unified": "Unified",
+      "Learning-Diffculties": "Learning Difficulties",
+      "Mental": "Mental",
+      "Autism": "Autism",
+      "autism": "Autism",
+      "hearing-impairment": "Hearing Impairment",
+      "learning-difficulties": "Learning Difficulties",
+      "Visual": "Visual",
+      "Visual-ImpairmentBraille": "Visual Impairment (Braille)"
+    },
+
+    "mostCommon": "Most Common Disability",
+    "topDisabilities": "Top 10 Disability Types (Among Disabled)",
+    "topDisabilitiesDualExceptional": "Top 10 Disability Types (Among Dual Exceptional)",
+    "satisfied": "Satisfied",
+    "notSatisfied": "Not Satisfied",
+    "averageSatisfaction": "Average Satisfaction",
+    "satisfaction": {
+      "veryHappy": "Very Satisfied",
+      "satisfied": "Satisfied",
+      "somewhat": "Somewhat Satisfied",
+      "dissatisfied": "Dissatisfied"
+    },
+    "chartLabels": {
+      "count": "Count",
+      "percentage": "Percentage",
+      "participants": "Participants",
+      "total": "Total"
+    }
+  },
+
+  "Header": {
+    "statistics": "Statistics"
+  },
+
+  "Switch": {
+    "label": "Switch Language",
+    "toEnglish": "English",
+    "toArabic": "العربية"
+  },
+
+  "Footer": {
+    "companyDescription": "TalentBridge - Supporting twice-exceptional students through comprehensive assessment and individualized planning.",
+    "quickLinks": "Quick Links",
+    "home": "Home",
+    "statistics": "Statistics",
+    "contact": "Contact Us",
+    "email": "support@talentbridge.edu",
+    "disclaimer": "This tool is for educational screening purposes only and does not constitute a medical or psychological diagnosis.",
+    "rights": "All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsConditions": "Terms & Conditions"
+  }
+}

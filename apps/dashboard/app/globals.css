@@ -1,0 +1,291 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Primary brand colors - Educational blue/purple theme */
+  --color-primary-blue: #2563eb;
+  --color-primary-blue-hover: #1d4ed8;
+  --color-primary-purple: #7c3aed;
+  --color-primary-purple-hover: #6d28d9;
+  --color-primary-green: #059669;
+  --color-primary-green-hover: #047857;
+
+  /* Gradients for modern design */
+  --color-hero-gradient: linear-gradient(
+    135deg,
+    #2563eb 0%,
+    #7c3aed 50%,
+    #2563eb 100%
+  );
+  --color-cta-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  --color-feature-gradient: linear-gradient(90deg, #dbeafe 0%, #e0e7ff 100%);
+
+  /* Background colors */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8fafc;
+  --color-bg-tertiary: #f1f5f9;
+  --color-dark-bg: #0f172a;
+  --color-dark-bg-secondary: #1e293b;
+  --color-dark-bg-tertiary: #334155;
+
+  /* Text colors */
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-text-muted: #94a3b8;
+  --color-dark-text-primary: #f8fafc;
+  --color-dark-text-secondary: #cbd5e1;
+  --color-dark-text-muted: #94a3b8;
+}
+
+@layer base {
+  :root {
+    font-family: var(--font-inter, sans-serif);
+  }
+  [dir="rtl"] {
+    font-family: var(--font-tajawal, sans-serif);
+  }
+}
+/* Enhanced animations for modern homepage */
+@keyframes pulse-slow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-slower {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.85;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes float-delayed {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 6s ease-in-out infinite;
+}
+
+.animate-pulse-slower {
+  animation: pulse-slower 10s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 8s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 400% 400%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.animate-slide-up {
+  animation: slide-in-up 0.6s ease-out forwards;
+}
+
+/* Enhanced button interactions */
+button:active {
+  transform: translateY(1px) scale(0.985);
+}
+
+button,
+a {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Hover effects for cards and sections */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.dark .card-hover:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3),
+    0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+/* Glass morphism effect */
+.glass {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Modern scrollbar with educational theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-blue),
+    var(--color-primary-purple)
+  );
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-blue-hover),
+    var(--color-primary-purple-hover)
+  );
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #1e293b, #334155);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #334155, #475569);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary-blue) transparent;
+}
+
+.dark * {
+  scrollbar-color: #334155 transparent;
+}
+
+/* Feature icons with educational theme */
+.feature-icon {
+  color: var(--color-primary-blue);
+  transition: all 0.3s ease;
+}
+
+.feature-icon:hover {
+  color: var(--color-primary-purple);
+  transform: scale(1.1);
+}
+
+.dark .feature-icon {
+  color: var(--color-dark-text-primary);
+}
+
+.dark .feature-icon:hover {
+  color: #a78bfa;
+}
+
+/* Typography enhancements */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  transition: color 0.3s ease;
+}
+
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+  color: var(--color-dark-text-primary);
+}
+
+p {
+  line-height: 1.6;
+  transition: color 0.3s ease;
+}
+
+.dark p {
+  color: var(--color-dark-text-secondary);
+}
+
+/* Focus states for accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-primary-blue);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Selection colors */
+::selection {
+  background: rgba(37, 99, 235, 0.2);
+  color: var(--color-text-primary);
+}
+
+.dark ::selection {
+  background: rgba(124, 58, 237, 0.3);
+  color: var(--color-dark-text-primary);
+}

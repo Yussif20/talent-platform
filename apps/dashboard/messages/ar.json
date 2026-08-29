@@ -1,0 +1,121 @@
+{
+  "Statistics": {
+    "pageTitle": "لوحة إحصائيات التقييم",
+    "pageSubtitle": "تحليل شامل لنتائج تقييم جسر المواهب",
+    "loading": "جاري تحميل الإحصائيات...",
+    "error": "فشل تحميل الإحصائيات",
+    "retry": "إعادة المحاولة",
+    "exportExcel": "تصدير إلى Excel",
+    "downloadingExcel": "جاري التنزيل...",
+    "lastUpdated": "آخر تحديث",
+    "filterByDate": "تصفية حسب النطاق الزمني",
+    "applyFilter": "تطبيق الفلتر",
+    "clearFilter": "مسح الفلتر",
+    "startDate": "تاريخ البداية",
+    "endDate": "تاريخ النهاية",
+    "allTime": "كل الوقت",
+
+    "kpis": {
+      "totalParticipants": "إجمالي المشاركين",
+      "percentageDisabled": "نسبة ذوي الإعاقة",
+      "percentageDualExceptional": "معدل مزدوجي الاستثنائية",
+      "averageTalent": "متوسط درجة الموهبة",
+      "averageDisability": "متوسط درجة الإعاقة"
+    },
+
+    "sections": {
+      "overview": "نظرة عامة",
+      "surveyTypes": "توزيع أنواع الاستبيان",
+      "categories": "توزيع الفئات",
+      "disabilities": "تفصيل الإعاقات",
+      "demographics": "التركيبة السكانية",
+      "genderDistribution": "توزيع الجنس",
+      "ageDistribution": "توزيع الفئات العمرية",
+      "dualExceptionalAge": "توزيع أعمار مزدوجي الاستثنائية",
+      "satisfaction": "رضا المستخدمين",
+      "dualExceptionalBySurveyType": "مزدوجو الاستثنائية حسب نوع الاستبيان"
+    },
+
+    "categories": {
+      "disabledOnly": "إعاقة فقط",
+      "talentedOnly": "موهبة فقط",
+      "dualExceptional": "مزدوج الاستثنائية",
+      "neither": "ليس أي منهما"
+    },
+
+    "surveyTypes": {
+      "parents": "أولياء الأمور",
+      "teachers": "المعلمون"
+    },
+
+    "demographics": {
+      "male": "ذكر",
+      "female": "أنثى",
+      "overall": "الإجمالي",
+      "talented": "الموهوبين",
+      "disabled": "ذوي الإعاقة"
+    },
+
+    "disabilityTypes": {
+      "ADHD": "اضطراب نقص الانتباه وفرط الحركة",
+      "Borderline-Intelligence": "الذكاء الحدي",
+      "Hearing-Impairment": "الإعاقة السمعية",
+      "Learning-Disabilities": "صعوبات التعلم",
+      "Visual-Impairment-Braille": "الإعاقة البصرية (برايل)",
+      "Physical-Disability": "الإعاقة الجسدية",
+      "Multiple-Disabilities": "إعاقات متعددة",
+      "Mild-Intellectual-Disability": "الإعاقة الذهنية الخفيفة",
+      "Unified": "توحد",
+      "Learning-Diffculties": "صعوبات التعلم",
+      "Mental": "عقلية",
+      "Autism": "التوحد",
+      "autism": "التوحد",
+      "hearing-impairment": "الإعاقة السمعية",
+      "learning-difficulties": "صعوبات التعلم",
+      "Visual": "بصرية",
+      "Visual-ImpairmentBraille": "الإعاقة البصرية (برايل)"
+    },
+
+    "mostCommon": "الإعاقة الأكثر شيوعاً",
+    "topDisabilities": "ترتيب الاعاقات حسب الأكثر شيوعا (بين ذوي الإعاقة)",
+    "topDisabilitiesDualExceptional": "ترتيب الاعاقات حسب الأكثر شيوعا (بين مزدوجي الاستثنائية)",
+    "satisfied": "راضون",
+    "notSatisfied": "غير راضين",
+    "averageSatisfaction": "متوسط الرضا",
+    "satisfaction": {
+      "veryHappy": "راضٍ جداً",
+      "satisfied": "راضٍ",
+      "somewhat": "راضٍ إلى حد ما",
+      "dissatisfied": "غير راضٍ"
+    },
+    "chartLabels": {
+      "count": "العدد",
+      "percentage": "النسبة المئوية",
+      "participants": "المشاركون",
+      "total": "المجموع"
+    }
+  },
+
+  "Header": {
+    "statistics": "الإحصائيات"
+  },
+
+  "Switch": {
+    "label": "تبديل اللغة",
+    "toEnglish": "English",
+    "toArabic": "العربية"
+  },
+
+  "Footer": {
+    "companyDescription": "جسر المواهب - دعم الطلاب مزدوجي الاستثنائية من خلال التقييم الشامل والتخطيط الفردي.",
+    "quickLinks": "روابط سريعة",
+    "home": "الرئيسية",
+    "statistics": "الإحصائيات",
+    "contact": "تواصل معنا",
+    "email": "support@talentbridge.edu",
+    "disclaimer": "هذه الأداة مخصصة لأغراض الفحص التعليمي فقط ولا تشكل تشخيصاً طبياً أو نفسياً.",
+    "rights": "جميع الحقوق محفوظة.",
+    "privacyPolicy": "سياسة الخصوصية",
+    "termsConditions": "الشروط والأحكام"
+  }
+}
