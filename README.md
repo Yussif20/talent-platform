@@ -173,7 +173,9 @@ asking about one once the talent score clears the threshold.
 
 ## Running it
 
-See [SETUP.md](SETUP.md).
+See [SETUP.md](SETUP.md) to set it up, and [docs/deployment.md](docs/deployment.md) for
+what the live environment actually looks like — hosts, regions, DNS, accounts and the
+things that only broke in production.
 
 ```bash
 npm install && npm run db:start && npm run db:seed && npm run db:accounts && npm run dev

@@ -3,6 +3,9 @@
 Everything needed to run this locally and deploy it. Steps marked **[you]** need an
 account or a credential and cannot be automated.
 
+Already deployed — see [docs/deployment.md](docs/deployment.md) for the live
+environment as it stands, including the settings that are easy to get wrong.
+
 ---
 
 ## 1. Local development
