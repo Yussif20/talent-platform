@@ -24,9 +24,32 @@ const PUBLIC_PATHS = ["/login", "/auth/callback"];
 export default async function middleware(request: NextRequest) {
   const response = intlMiddleware(request);
 
+  // Written out in full, and checked before use. Next inlines NEXT_PUBLIC_* into the
+  // middleware bundle at build time, so a variable missing from the deployment
+  // environment becomes a literal `undefined` here rather than a runtime lookup failure.
+  // Passing that to createServerClient throws inside the library, and because middleware
+  // runs on every request the whole site returns MIDDLEWARE_INVOCATION_FAILED with
+  // nothing in the message naming the cause. Failing loudly and specifically instead.
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseKey) {
+    const missing = [
+      !supabaseUrl && "NEXT_PUBLIC_SUPABASE_URL",
+      !supabaseKey && "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+    ]
+      .filter(Boolean)
+      .join(", ");
+    throw new Error(
+      `Missing ${missing} in this deployment. These are inlined at build time, so set ` +
+        `them in the Vercel project's Environment Variables and redeploy -- saving them ` +
+        `alone does not rebuild. See SETUP.md section 3.`,
+    );
+  }
+
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseKey,
     {
       cookies: {
         getAll() {
