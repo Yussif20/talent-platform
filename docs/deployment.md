@@ -101,6 +101,34 @@ a paused project can still answer at the edge without Postgres running.
 
 Verified passing 29 Aug 2026 via `workflow_dispatch`.
 
+## Repository metadata
+
+Set under **Settings → General** on GitHub. Recorded here because it lives only in
+GitHub's UI and is invisible to the repo itself.
+
+**Description**
+
+> Bilingual (AR/EN) twice-exceptional student screening platform built for the Saudi
+> Ministry of Education. Next.js 15 monorepo; a dead .NET backend rebuilt on Supabase
+> with row-level security, contract-verified so all 12 chart components migrated
+> untouched.
+
+**Website:** `https://talentbridge.yousefayman.com`
+
+**Topics:** `nextjs` `typescript` `supabase` `postgresql` `row-level-security` `i18n`
+`rtl` `arabic` `monorepo` `turborepo` `recharts` `tailwindcss` `special-education`
+`accessibility`
+
+Also worth setting: a **social preview** image (Settings → General → Social preview) —
+a dashboard screenshot is what renders when the repo is shared on LinkedIn or X, and it
+carries more weight than the description does.
+
+Naming the Saudi Ministry of Education is confirmed acceptable with the client
+(Aug 2026). If that ever needs softening, the places to change are this description, the
+README's opening line, and the intro paragraph.
+
+---
+
 ## Not configured
 
 **Email.** `supabase/functions/send-report` is written and committed but not deployed, and
