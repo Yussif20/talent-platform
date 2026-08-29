@@ -131,13 +131,33 @@ README's opening line, and the intro paragraph.
 
 ---
 
-## Not configured
+## Email
 
-**Email.** `supabase/functions/send-report` is written and committed but not deployed, and
-`RESEND_API_KEY` is unset. The report page detects this (the function answers 501) and
-shows a short notice instead of the email form; the PDF download is unaffected. See
-SETUP.md §6 — the verified `yousefayman.com` domain means Resend can now deliver to real
-recipients rather than only to the account owner.
+**Deployed and verified end to end** (29 Aug 2026).
+
+- `supabase/functions/send-report` is live on the project.
+- Secrets set: `RESEND_API_KEY`, `REPORT_BASE_URL`, `REPORT_FROM_ADDRESS`
+  (`TalentBridge <reports@yousefayman.com>`). `SUPABASE_URL` and
+  `SUPABASE_SERVICE_ROLE_KEY` are injected automatically by Supabase.
+- `yousefayman.com` is verified in Resend, so it delivers to any recipient rather than
+  only the account owner.
+
+Redeploy after changing the function:
+
+```bash
+set -a; . ./.env.local; set +a          # needs SUPABASE_ACCESS_TOKEN
+npx supabase functions deploy send-report --project-ref fwhlqannxueamuumhjwp --no-verify-jwt
+```
+
+The access token used for the deploy was scoped to **Edge Functions: Write** and **Edge
+Function Secrets: Write** only, with a 7-day expiry — it could not read the database or
+the API keys. Generate a fresh one the same way when needed rather than keeping a
+long-lived token.
+
+The function verifies the report's capability token against the database before sending,
+so holding an id alone cannot be used to send mail to arbitrary addresses. Behaviour was
+checked against the local edge runtime across malformed JSON, bad uuid, short token,
+invalid email, wrong token and unknown id — all rejected before any send is attempted.
 
 ## Verification
 
