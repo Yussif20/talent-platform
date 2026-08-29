@@ -45,16 +45,27 @@ export async function submitScreening(
     return { ok: false, errors, message: "validation_failed" };
   }
 
-  const supabase = await createClient();
-  const { error } = await supabase
-    .from("submissions")
-    .insert(toSubmissionRow(parsed.data, { id, reportToken }) as never);
+  try {
+    const supabase = await createClient();
+    const { error } = await supabase
+      .from("submissions")
+      .insert(toSubmissionRow(parsed.data, { id, reportToken }) as never);
 
-  if (error) {
-    // Never surface raw Postgres text to the browser; it can leak schema details.
-    console.error("submitScreening failed:", error);
+    if (error) {
+      // Never surface raw Postgres text to the browser; it can leak schema details.
+      console.error("submitScreening failed:", error);
+      return { ok: false, message: "save_failed" };
+    }
+
+    return { ok: true };
+  } catch (cause) {
+    // createClient() throws when NEXT_PUBLIC_SUPABASE_* are absent from the deployment.
+    // Those are inlined at build time, so a deployment built before they were set has
+    // `undefined` compiled in. Without this catch the action rejects and the respondent
+    // sees a generic failure after answering every question, with nothing in the log
+    // saying why. Fails closed either way -- the point is that the cause is recoverable
+    // from the server log.
+    console.error("submitScreening threw before reaching the database:", cause);
     return { ok: false, message: "save_failed" };
   }
-
-  return { ok: true };
 }
