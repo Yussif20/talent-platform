@@ -60,8 +60,10 @@ npm run typecheck
 ## 2. Supabase project **[you]**
 
 1. Create a project at [supabase.com](https://supabase.com). Free tier is enough.
-   Choose a region close to Saudi Arabia — `eu-central-1` (Frankfurt) is the nearest
-   with the lowest latency.
+   Pick a region close to the users; the live project is in `eu-west-1` (Ireland), and
+   `eu-central-1` (Frankfurt) is marginally closer to Saudi Arabia.
+
+   Note the **project ref** from the dashboard URL — you need it below.
 2. **Project Settings → API** gives you three values. Put them in
    `apps/forms/.env.local`, `apps/dashboard/.env.local` and `.env.local`:
 
@@ -71,12 +73,23 @@ npm run typecheck
    | `anon` `public` key | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | yes — RLS bounds it |
    | `service_role` key | `SUPABASE_SERVICE_ROLE_KEY` | **no** — bypasses RLS entirely |
 
-3. Push the schema:
+3. Push the schema.
+
+   `supabase login` needs a TTY and `supabase link` prompts for the database password, so
+   neither runs unattended. `db push` takes a connection string directly instead, which
+   avoids both:
 
    ```bash
-   npx supabase link --project-ref <your-project-ref>
-   npx supabase db push
+   npx supabase db push --db-url "$SUPABASE_DB_URL"
    ```
+
+   Get that string from **Settings → Database → Connection string → URI**, and take the
+   **Session pooler** tab. The direct `db.<ref>.supabase.co` host has **no DNS records**
+   for projects created recently — it does not resolve at all — so the pooler is the only
+   route. Use port 5432 (session mode), not 6543: transaction mode does not handle DDL
+   cleanly. Note the username is `postgres.<project-ref>`, not `postgres`.
+
+   Store it as `SUPABASE_DB_URL` in the root `.env.local`, which is gitignored.
 
 4. Seed and create accounts against the hosted project:
 
@@ -184,8 +197,7 @@ work exactly the same; the UI shows a short "not configured" note instead of the
 
 ## 7. Before making the repository public
 
-- [ ] Confirm with the client that naming the Saudi Ministry of Education is acceptable.
-      The README currently does. Softening it is a one-line edit.
+- [x] Naming the Saudi Ministry of Education — confirmed acceptable (Aug 2026).
 - [ ] `git log -p | grep -i "service_role\|eyJ"` — check no real key was ever committed.
       The local keys in `.env.local` are the CLI's public demo keys and are gitignored
       regardless.
