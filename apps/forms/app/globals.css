@@ -1,6 +1,15 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+/*
+ * Tailwind 4 discovers utility classes by scanning source files, and auto-detection
+ * stops at this app's own tree -- it does not follow into sibling workspace packages.
+ * Without this, every class that appears only in @talent/ui produced no CSS at all:
+ * the shared Header rendered with `dark:bg-gray-900/80` and `backdrop-blur-xl` in its
+ * markup and no rules behind them, so it stayed white-on-dark in production.
+ */
+@source "../../../packages/ui/src";
+
 @theme {
   /* Primary brand colors - Educational blue/purple theme */
   --color-primary-blue: #2563eb;
