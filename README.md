@@ -10,8 +10,8 @@ analytics dashboard the programme's specialists use to read the results.
 
 | | |
 |---|---|
-| **Forms** | *(add your Vercel URL)* |
-| **Dashboard** | *(add your Vercel URL)* — sign in with **View as demo specialist** |
+| **Forms** | **[talentbridge.yousefayman.com](https://talentbridge.yousefayman.com)** |
+| **Dashboard** | **[stats.talentbridge.yousefayman.com](https://stats.talentbridge.yousefayman.com)** — sign in with **View as demo specialist**, no signup |
 | **Stack** | Next.js 15 · React 19 · TypeScript · Tailwind 4 · Supabase (Postgres, Auth, Edge Functions) · Recharts |
 
 ---
