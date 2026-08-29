@@ -3,6 +3,15 @@
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import {
+  DISABILITIES,
+  PARENT_QUESTION_COUNT,
+  isTwiceExceptional,
+  scoreAnswers,
+} from "@talent/domain";
+import { submitScreening } from "../../actions/submit-screening";
+import { checkupDateToday, newScreeningIdentifiers, reportPath } from "@/lib/screening";
 
 interface FormData {
   childName: string;
@@ -41,6 +50,7 @@ export default function ParentForm() {
   const maxBirthDate = formatLocalDate(today);
   const locale = useLocale();
   const t = useTranslations("ParentForm");
+  const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
     childName: "",
     grade: "",
@@ -49,7 +59,7 @@ export default function ParentForm() {
     schoolName: "",
     birthDate: "",
     disability: "",
-    answers: new Array(15).fill(-1),
+    answers: new Array(PARENT_QUESTION_COUNT).fill(-1),
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<ApiResponse | null>(null);
@@ -133,18 +143,12 @@ export default function ParentForm() {
     setFormData((prev) => ({ ...prev, answers: newAnswers }));
   };
 
+  // Scoring lives in @talent/domain so the two forms, the seed script and the report
+  // page cannot drift apart. scripts/verify-scoring.ts proves it reproduces the eight
+  // copies of this reduce that used to be inlined across the two form pages.
   const calculateResult = () => {
-    // New scoring: never=0, sometimes=5%, always=10%
-    const totalPoints = formData.answers.reduce((sum, answer) => {
-      if (answer === 0) return sum + 0; // Never = 0
-      if (answer === 1) return sum + 5; // Sometimes = 5%
-      if (answer === 2) return sum + 10; // Always = 10%
-      return sum;
-    }, 0);
-
-    // Calculate percentage out of maximum possible (15 questions × 10% = 150%)
-    const percentage = (totalPoints / 150) * 100;
-    return { totalPoints, percentage };
+    const { points, percentage } = scoreAnswers(formData.answers);
+    return { totalPoints: points, percentage };
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -173,17 +177,17 @@ export default function ParentForm() {
 
     try {
       const { totalPoints, percentage } = calculateResult();
-      const isTwiceExceptional = percentage >= 60;
+      const twiceExceptional = isTwiceExceptional(percentage);
 
       // Immediately show results without saving to database yet
       setResult({
         result: totalPoints,
-        evaluation: isTwiceExceptional
+        evaluation: twiceExceptional
           ? t("results.twiceExceptional")
           : t("results.notTwiceExceptional"),
         disability: "",
         percentage: percentage,
-        isTwiceExceptional: isTwiceExceptional,
+        isTwiceExceptional: twiceExceptional,
       });
       setShowSatisfactionForm(true);
       setSaveSucceeded(null);
@@ -198,56 +202,47 @@ export default function ParentForm() {
     setIsSavingSatisfaction(true);
 
     try {
-      const { totalPoints, percentage } = calculateResult();
-      const isTwiceExceptional = percentage >= 60;
+      const { percentage } = calculateResult();
+      const twiceExceptional = isTwiceExceptional(percentage);
+      const { id, reportToken } = newScreeningIdentifiers();
 
-      // Prepare API request body with satisfaction rating
-      const today = new Date();
-      const yyyyMmDd = today.toISOString().slice(0, 10);
-      const requestBody = {
-        name: formData.childName,
+      const outcome = await submitScreening({
+        id,
+        reportToken,
+        childName: formData.childName,
         educationGrade: formData.grade,
-        gender: formData.gender,
+        gender: formData.gender as "male" | "female",
         parentName: formData.parentName,
-        birthDate: formData.birthDate,
-        checkerName: null,
-        checkupDate: yyyyMmDd,
         schoolName: formData.schoolName,
-        isTalented: isTwiceExceptional,
-        talentPercent: Number(percentage.toFixed(2)),
+        birthDate: formData.birthDate,
+        // Local calendar date, not toISOString(): see lib/screening.ts.
+        checkupDate: checkupDateToday(),
+        // A parent submission has no examiner.
+        checkerName: null,
+        checkerTitle: null,
+        isTalented: twiceExceptional,
+        talentPercent: percentage,
+        // The parent declares a disability rather than measuring it, so the category is
+        // recorded and the severity stays null. The legacy client sent a hardcoded
+        // disabilityPercent of 100 on every parent submission, which is what made the
+        // dashboard's averageDisabilityPercent meaningless.
         isDisabled: true,
         disability: formData.disability,
-        disabilityPercent: 100,
+        disabilityPercent: null,
         surveyType: "Parents",
         satisfactionPercent: satisfactionRating,
-      };
+        answers: formData.answers,
+        locale: locale === "ar" ? "ar" : "en",
+      });
 
-      console.log("Submitting to API:", requestBody);
-
-      const response = await fetch(
-        "https://talent1234bridge-001-site1.stempurl.com/api/SurveyResult/Save",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        }
-      );
-
-      console.log("API Response status:", response.status);
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("API Error response:", errorText);
+      if (!outcome.ok) {
         setSaveSucceeded(false);
         return;
       }
 
-      const apiResult = await response.json();
-      console.log("API Success:", apiResult);
       setSaveSucceeded(true);
       setShowSatisfactionForm(false);
+      router.push(reportPath(locale, id, reportToken));
     } catch (err) {
       console.error("Save error:", err);
       setSaveSucceeded(false);
@@ -410,52 +405,58 @@ export default function ParentForm() {
               {showSatisfactionForm && (
                 <div className="bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-6 border-2 border-blue-200 dark:border-blue-800">
                   <h3 className="text-xl font-semibold text-blue-900 dark:text-blue-300 mb-4 text-center">
-                    {locale === "ar"
-                      ? "مدى رضاك عن الخدمة"
-                      : "Rate Your Satisfaction"}
+{t("satisfaction.title")}
                   </h3>
 
                   {/* Instructions */}
                   <div className="mb-6 p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl border border-blue-200 dark:border-blue-700">
                     <p className="text-sm text-gray-700 dark:text-gray-300 text-center leading-relaxed">
-                      {locale === "ar"
-                        ? "نحتاج إلى تقييمك الصادق لحفظ استجابتك ومساعدتنا في تحسين خدماتنا. تقييمك يساهم في تطوير تجربة أفضل للجميع 🌟"
-                        : "We need your honest rating to save your response and help us improve our services. Your feedback contributes to creating a better experience for everyone 🌟"}
+{t("satisfaction.intro")}
                     </p>
                   </div>
 
                   {/* Satisfaction Options */}
                   <div className="space-y-3 mb-6">
+                    {/*
+                      Selected-state classes are written out in full rather than
+                      interpolated. Tailwind finds class names by scanning source text,
+                      so the previous `border-${option.color}-500` produced strings that
+                      were never generated into the stylesheet -- the highlight simply
+                      did nothing.
+                    */}
                     {[
                       {
-                        label: locale === "ar" ? "راضٍ جداً" : "Very Satisfied",
+                        label: t("satisfaction.verySatisfied"),
                         value: 100,
-                        color: "green",
+                        selected:
+                          "border-green-500 bg-green-50 dark:bg-green-900/20",
+                        text: "text-green-700 dark:text-green-300",
                       },
                       {
-                        label: locale === "ar" ? "راضٍ" : "Satisfied",
+                        label: t("satisfaction.satisfied"),
                         value: 75,
-                        color: "blue",
+                        selected: "border-blue-500 bg-blue-50 dark:bg-blue-900/20",
+                        text: "text-blue-700 dark:text-blue-300",
                       },
                       {
-                        label:
-                          locale === "ar"
-                            ? "راضٍ إلى حد ما"
-                            : "Somewhat Satisfied",
+                        label: t("satisfaction.somewhatSatisfied"),
                         value: 50,
-                        color: "yellow",
+                        selected:
+                          "border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20",
+                        text: "text-yellow-700 dark:text-yellow-300",
                       },
                       {
-                        label: locale === "ar" ? "غير راضٍ" : "Dissatisfied",
+                        label: t("satisfaction.dissatisfied"),
                         value: 25,
-                        color: "red",
+                        selected: "border-red-500 bg-red-50 dark:bg-red-900/20",
+                        text: "text-red-700 dark:text-red-300",
                       },
                     ].map((option) => (
                       <label
                         key={option.value}
                         className={`flex items-center p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
                           satisfactionRating === option.value
-                            ? `border-${option.color}-500 bg-${option.color}-50 dark:bg-${option.color}-900/20`
+                            ? option.selected
                             : "border-gray-200 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-600 bg-white dark:bg-gray-800"
                         }`}
                       >
@@ -470,9 +471,9 @@ export default function ParentForm() {
                           className="w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
                         />
                         <span
-                          className={`ml-3 text-base font-medium ${
+                          className={`ms-3 text-base font-medium ${
                             satisfactionRating === option.value
-                              ? `text-${option.color}-700 dark:text-${option.color}-300`
+                              ? option.text
                               : "text-gray-700 dark:text-gray-300"
                           }`}
                         >
@@ -480,7 +481,7 @@ export default function ParentForm() {
                         </span>
                         {satisfactionRating === option.value && (
                           <svg
-                            className={`ml-auto w-6 h-6 text-${option.color}-600`}
+                            className="ms-auto w-6 h-6 text-current"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
@@ -502,13 +503,7 @@ export default function ParentForm() {
                       isSavingSatisfaction ? "animate-pulse" : ""
                     }`}
                   >
-                    {isSavingSatisfaction
-                      ? locale === "ar"
-                        ? "جاري الحفظ..."
-                        : "Saving..."
-                      : locale === "ar"
-                      ? "إرسال التقييم"
-                      : "Submit Rating"}
+{isSavingSatisfaction ? t("satisfaction.saving") : t("satisfaction.submit")}
                   </button>
                 </div>
               )}
@@ -608,33 +603,17 @@ export default function ParentForm() {
                   <option value="" disabled>
                     {t("form.disabilitySelect")}
                   </option>
-                  <option value="ADHD">
-                    {t("form.disabilityOptions.ADHD")}
-                  </option>
-                  <option value="Borderline-Intelligence">
-                    {t("form.disabilityOptions.Borderline_Intelligence")}
-                  </option>
-                  <option value="Hearing-Impairment">
-                    {t("form.disabilityOptions.Hearing_Impairment")}
-                  </option>
-                  <option value="Learning-Disabilities">
-                    {t("form.disabilityOptions.Learning_Disabilities")}
-                  </option>
-                  <option value="Visual-Impairment-Braille">
-                    {t("form.disabilityOptions.Visual_Impairment_Braille")}
-                  </option>
-                  <option value="Physical-Disability">
-                    {t("form.disabilityOptions.Physical_Disability")}
-                  </option>
-                  <option value="Multiple-Disabilities">
-                    {t("form.disabilityOptions.Multiple_Disabilities")}
-                  </option>
-                  <option value="Mild-Intellectual-Disability">
-                    {t("form.disabilityOptions.Mild_Intellectual_Disability")}
-                  </option>
-                  <option value="Unified">
-                    {t("form.disabilityOptions.Unified")}
-                  </option>
+                  {/*
+                    Options come from DISABILITIES in @talent/domain, the single
+                    definition of the nine categories, rather than nine hand-written
+                    <option> tags whose values had to stay in sync by hand with the
+                    teacher form's slugs, the message keys and the database.
+                  */}
+                  {DISABILITIES.map((d) => (
+                    <option key={d.code} value={d.code}>
+                      {t(`form.disabilityOptions.${d.messageKey}`)}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -669,7 +648,7 @@ export default function ParentForm() {
                       }
                       className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
                     />
-                    <span className="ml-2 text-gray-700 dark:text-gray-300">
+                    <span className="ms-2 text-gray-700 dark:text-gray-300">
                       {t("form.genderOptions.male")}
                     </span>
                   </label>
@@ -684,7 +663,7 @@ export default function ParentForm() {
                       }
                       className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
                     />
-                    <span className="ml-2 text-gray-700 dark:text-gray-300">
+                    <span className="ms-2 text-gray-700 dark:text-gray-300">
                       {t("form.genderOptions.female")}
                     </span>
                   </label>

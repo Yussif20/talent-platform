@@ -124,7 +124,17 @@
         "label": "Save status"
       }
     },
-    "disclaimer": "These results are for educational screening purposes only and do not constitute a medical or psychological diagnosis. For a comprehensive evaluation, please consult a qualified specialist."
+    "disclaimer": "These results are for educational screening purposes only and do not constitute a medical or psychological diagnosis. For a comprehensive evaluation, please consult a qualified specialist.",
+    "satisfaction": {
+      "title": "Rate Your Satisfaction",
+      "intro": "We need your honest rating to save your response and help us improve our services. Your feedback contributes to creating a better experience for everyone 🌟",
+      "verySatisfied": "Very Satisfied",
+      "satisfied": "Satisfied",
+      "somewhatSatisfied": "Somewhat Satisfied",
+      "dissatisfied": "Dissatisfied",
+      "saving": "Saving...",
+      "submit": "Submit Rating"
+    }
   },
   "Footer": {
     "companyDescription": "TalentBridge - Supporting twice-exceptional students through comprehensive assessment and individualized planning.",
@@ -147,7 +157,10 @@
       "title": "Basic Information",
       "studentName": "Student Name",
       "gender": "Gender",
-      "genderOptions": { "male": "Male", "female": "Female" },
+      "genderOptions": {
+        "male": "Male",
+        "female": "Female"
+      },
       "birthDate": "Birth Date",
       "examinerName": "Examiner Name",
       "examDate": "Exam/Observation Date",
@@ -203,6 +216,50 @@
       "talentPercent": "Talent Percent",
       "disabilityPercent": "Disability Percent",
       "talentPercentageLabel": "Talent percentage: {percentage}%"
+    },
+    "satisfaction": {
+      "title": "Rate Your Satisfaction",
+      "intro": "We need your honest rating to save your response and help us improve our services. Your feedback contributes to creating a better experience for everyone 🌟",
+      "verySatisfied": "Very Satisfied",
+      "satisfied": "Satisfied",
+      "somewhatSatisfied": "Somewhat Satisfied",
+      "dissatisfied": "Dissatisfied",
+      "saving": "Saving...",
+      "submit": "Submit Rating"
     }
+  },
+  "DemoNotice": {
+    "title": "Demonstration only.",
+    "body": "This is a portfolio deployment of a screening tool built for a special-education programme. Please use invented details rather than a real child's name, school or date of birth. Submitted data is stored to power the statistics dashboard and is deleted periodically.",
+    "dismiss": "Dismiss this notice"
+  },
+  "Report": {
+    "title": "Screening Report",
+    "subtitle": "TalentBridge — twice-exceptional screening",
+    "childName": "Child",
+    "school": "School",
+    "grade": "Grade",
+    "age": "Age",
+    "ageValue": "{years} years ({band})",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "assessedOn": "Assessed on",
+    "examiner": "Examiner",
+    "examinerTitle": "Examiner role",
+    "parent": "Parent / guardian",
+    "resultTitle": "Result",
+    "threshold": "of {threshold}% threshold",
+    "positive": "The responses show indicators consistent with twice-exceptionality: strengths that may be masked by an accompanying difficulty. We recommend a full evaluation with your school's specialist team, and the attached intervention plan as a starting point.",
+    "negative": "The responses did not show sufficient indicators of giftedness at this time. This does not rule out distinctive abilities emerging later, and we recommend following up with your school's specialist team.",
+    "disabilityCategory": "Reported category",
+    "severity": "Assessed severity: {percent}%",
+    "disclaimer": "This report is an educational screening result only. It is not a medical or psychological diagnosis and does not replace a professional evaluation.",
+    "downloadReport": "Download this report",
+    "generating": "Preparing PDF...",
+    "downloadPlan": "Download intervention plan",
+    "keepLink": "Keep this page's link to return to this report. Anyone with the link can view it, so share it only with people you trust.",
+    "notFoundTitle": "Report unavailable",
+    "notFoundBody": "This report could not be found. The link may be incomplete or the report may have been removed. Please check the full link you were given."
   }
 }

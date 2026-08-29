@@ -289,3 +289,53 @@ textarea:focus-visible {
   background: rgba(124, 58, 237, 0.3);
   color: var(--color-dark-text-primary);
 }
+
+/*
+ * A printed sheet keeps its own light palette even while the app is in dark mode.
+ *
+ * `.dark h1, .dark h2, ...` above forces every heading to the dark-mode text colour,
+ * which is near-white. That is right for the app's own dark surfaces, but the report is
+ * a fixed-white page that gets captured to canvas for the PDF, so its headings were
+ * rendering white-on-white -- invisible on screen and in the downloaded file.
+ * The extra `.dark` here outranks that rule rather than fighting it with !important.
+ */
+.report-sheet,
+.report-sheet h1,
+.report-sheet h2,
+.report-sheet h3,
+.report-sheet p,
+.report-sheet dt,
+.report-sheet dd,
+.dark .report-sheet,
+.dark .report-sheet h1,
+.dark .report-sheet h2,
+.dark .report-sheet h3,
+.dark .report-sheet p,
+.dark .report-sheet dt,
+.dark .report-sheet dd {
+  color: #111827;
+}
+
+/* Tailwind's muted greys inside the sheet still need to win over `.dark p`. */
+.dark .report-sheet .text-gray-500 {
+  color: #6b7280;
+}
+
+.dark .report-sheet .text-gray-600 {
+  color: #4b5563;
+}
+
+/*
+ * Arabic is a joined script: letter-spacing pulls the glyphs apart and breaks the
+ * connections, turning "الطفل" into "ل طفل". `uppercase` is meaningless for Arabic
+ * but `tracking-*` is actively destructive, so both are dropped under [dir="rtl"].
+ */
+[dir="rtl"] .tracking-wide,
+[dir="rtl"] .tracking-wider,
+[dir="rtl"] .tracking-widest {
+  letter-spacing: normal;
+}
+
+[dir="rtl"] .uppercase {
+  text-transform: none;
+}

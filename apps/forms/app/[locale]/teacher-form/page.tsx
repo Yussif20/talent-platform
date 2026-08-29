@@ -4,11 +4,20 @@ import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import Link from "next/link";
 
+import { useRouter } from "next/navigation";
 import {
-  generalQuestions,
   disabilityCategories,
+  disabilityFromSlug,
+  generalQuestions,
   getDisabilityQuestions,
-} from "../../../data/TeacherData";
+  interventionPlanPath,
+  isTwiceExceptional,
+  scoreAnswers,
+  TEACHER_DISABILITY_QUESTION_COUNT,
+  TEACHER_GENERAL_QUESTION_COUNT,
+} from "@talent/domain";
+import { submitScreening } from "../../actions/submit-screening";
+import { checkupDateToday, newScreeningIdentifiers, reportPath } from "@/lib/screening";
 
 interface BasicInfo {
   studentName: string;
@@ -47,6 +56,7 @@ export default function TeacherForm() {
   const locale = useLocale();
   const tParent = useTranslations("ParentForm");
   const tTeacher = useTranslations("TeacherForm");
+  const router = useRouter();
   const today = new Date();
   const eighteenYearsAgo = new Date(
     today.getFullYear() - 18,
@@ -80,8 +90,8 @@ export default function TeacherForm() {
       schoolName: "",
       grade: "",
     },
-    generalAnswers: new Array(10).fill(-1),
-    disabilityAnswers: new Array(10).fill(-1),
+    generalAnswers: new Array(TEACHER_GENERAL_QUESTION_COUNT).fill(-1),
+    disabilityAnswers: new Array(TEACHER_DISABILITY_QUESTION_COUNT).fill(-1),
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<ApiResponse | null>(null);
@@ -146,12 +156,7 @@ export default function TeacherForm() {
           break;
         }
         // Calculate general score
-        const generalScore = formData.generalAnswers.reduce((sum, answer) => {
-          if (answer === 0) return sum + 0;
-          if (answer === 1) return sum + 5;
-          if (answer === 2) return sum + 10;
-          return sum;
-        }, 0);
+        const generalScore = scoreAnswers(formData.generalAnswers).points;
         const talentPercent = Number(generalScore.toFixed(2));
         if (talentPercent < 60) {
           // Show results immediately without saving to database
@@ -225,21 +230,8 @@ export default function TeacherForm() {
     console.log("Submitting survey with name:", formData.basicInfo.studentName);
 
     try {
-      const generalScore = formData.generalAnswers.reduce((sum, answer) => {
-        if (answer === 0) return sum + 0;
-        if (answer === 1) return sum + 5;
-        if (answer === 2) return sum + 10;
-        return sum;
-      }, 0);
-      const disabilityScore = formData.disabilityAnswers.reduce(
-        (sum, answer) => {
-          if (answer === 0) return sum + 0;
-          if (answer === 1) return sum + 5;
-          if (answer === 2) return sum + 10;
-          return sum;
-        },
-        0
-      );
+      const generalScore = scoreAnswers(formData.generalAnswers).points;
+      const disabilityScore = scoreAnswers(formData.disabilityAnswers).points;
       const totalScore = generalScore + disabilityScore;
 
       const maxDisabilityScore = formData.disabilityAnswers.length * 10;
@@ -280,120 +272,69 @@ export default function TeacherForm() {
     setIsSavingSatisfaction(true);
 
     try {
-      const today = new Date();
-      const yyyyMmDd = today.toISOString().slice(0, 10);
+      const generalScore = scoreAnswers(formData.generalAnswers).points;
+      const talentPercent = Number(generalScore.toFixed(2));
+      const talented = !lowTalentScore && isTwiceExceptional(talentPercent);
 
-      let requestBody;
+      // The teacher form's own option ids are kebab-case slugs ("learning-difficulties")
+      // while the stored vocabulary is canonical ("Learning-Disabilities"). That
+      // translation used to be a nine-entry object literal inlined here, and a second
+      // copy of the same literal further down for the plan download. Both are replaced by
+      // the one mapping that @talent/domain defines.
+      const category = formData.selectedDisability
+        ? disabilityFromSlug(formData.selectedDisability)
+        : undefined;
 
-      if (lowTalentScore) {
-        // For low talent score (< 60)
-        const generalScore = formData.generalAnswers.reduce((sum, answer) => {
-          if (answer === 0) return sum + 0;
-          if (answer === 1) return sum + 5;
-          if (answer === 2) return sum + 10;
-          return sum;
-        }, 0);
-        const talentPercent = Number(generalScore.toFixed(2));
+      const disabilityPercent =
+        lowTalentScore || !category
+          ? null
+          : scoreAnswers(formData.disabilityAnswers).percentage;
 
-        requestBody = {
-          name: formData.basicInfo.studentName,
-          educationGrade: formData.basicInfo.grade,
-          gender: formData.basicInfo.gender,
-          parentName: formData.basicInfo.examinerName,
-          birthDate: formData.basicInfo.birthDate,
-          checkerName: formData.basicInfo.examinerName,
-          checkupDate: yyyyMmDd,
-          schoolName: formData.basicInfo.schoolName,
-          isTalented: false,
-          talentPercent,
-          isDisabled: false,
-          disability: "",
-          disabilityPercent: 0,
-          surveyType: "Teachers",
-          satisfactionPercent: satisfactionRating,
-        };
-      } else {
-        // For normal case with disability assessment
-        const generalScore = formData.generalAnswers.reduce((sum, answer) => {
-          if (answer === 0) return sum + 0;
-          if (answer === 1) return sum + 5;
-          if (answer === 2) return sum + 10;
-          return sum;
-        }, 0);
-        const disabilityScore = formData.disabilityAnswers.reduce(
-          (sum, answer) => {
-            if (answer === 0) return sum + 0;
-            if (answer === 1) return sum + 5;
-            if (answer === 2) return sum + 10;
-            return sum;
-          },
-          0
-        );
+      const answers = lowTalentScore
+        ? formData.generalAnswers
+        : [...formData.generalAnswers, ...formData.disabilityAnswers];
 
-        const maxDisabilityScore = formData.disabilityAnswers.length * 10;
-        const disabilityPercent =
-          maxDisabilityScore > 0
-            ? (disabilityScore / maxDisabilityScore) * 100
-            : 0;
+      const examiner = formData.basicInfo.examinerName;
+      const { id, reportToken } = newScreeningIdentifiers();
 
-        const talentPercent = Number(generalScore.toFixed(2));
-        const isTalented = talentPercent >= 60;
+      const outcome = await submitScreening({
+        id,
+        reportToken,
+        childName: formData.basicInfo.studentName,
+        educationGrade: formData.basicInfo.grade,
+        gender: formData.basicInfo.gender as "male" | "female",
+        parentName: examiner,
+        schoolName: formData.basicInfo.schoolName,
+        birthDate: formData.basicInfo.birthDate,
+        checkupDate: checkupDateToday(),
+        checkerName: examiner,
+        // Collected on step one and required to advance, then dropped by the legacy
+        // payload. It is stored now.
+        checkerTitle: formData.basicInfo.examinerTitle || null,
+        isTalented: talented,
+        talentPercent,
+        // A teacher submission below the talent threshold skips the disability section
+        // entirely; the legacy client sent disability: "" for those, which is not a
+        // category. Absence is null.
+        isDisabled: Boolean(category),
+        disability: category?.code ?? null,
+        disabilityPercent,
+        surveyType: "Teachers",
+        satisfactionPercent: satisfactionRating,
+        answers,
+        locale: locale === "ar" ? "ar" : "en",
+      });
 
-        const disabilityMap: Record<string, string> = {
-          adhd: "ADHD",
-          "borderline-intelligence": "Borderline-Intelligence",
-          "hearing-impairment": "Hearing-Impairment",
-          "learning-difficulties": "Learning-Disabilities",
-          "visual-impairment": "Visual-Impairment-Braille",
-          "physical-disability": "Physical-Disability",
-          "multiple-disabilities": "Multiple-Disabilities",
-          "intellectual-disability": "Mild-Intellectual-Disability",
-          unified: "Unified",
-        };
-        const mappedDisability = formData.selectedDisability
-          ? disabilityMap[formData.selectedDisability] ||
-            formData.selectedDisability
-          : "";
-
-        requestBody = {
-          name: formData.basicInfo.studentName,
-          educationGrade: formData.basicInfo.grade,
-          gender: formData.basicInfo.gender,
-          parentName: formData.basicInfo.examinerName,
-          birthDate: formData.basicInfo.birthDate,
-          checkerName: formData.basicInfo.examinerName,
-          checkupDate: yyyyMmDd,
-          schoolName: formData.basicInfo.schoolName,
-          isTalented: isTalented,
-          talentPercent: talentPercent,
-          isDisabled: true,
-          disability: mappedDisability,
-          disabilityPercent: Number(disabilityPercent.toFixed(1)),
-          surveyType: "Teachers",
-          satisfactionPercent: satisfactionRating,
-        };
-      }
-
-      const response = await fetch(
-        "https://talent1234bridge-001-site1.stempurl.com/api/SurveyResult/Save",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        }
-      );
-
-      if (!response.ok) {
+      if (!outcome.ok) {
         setSaveSucceeded(false);
         return;
       }
 
-      await response.json();
       setSaveSucceeded(true);
       setShowSatisfactionForm(false);
-    } catch {
+      router.push(reportPath(locale, id, reportToken));
+    } catch (err) {
+      console.error("Save error:", err);
       setSaveSucceeded(false);
     } finally {
       setIsSavingSatisfaction(false);
@@ -404,7 +345,7 @@ export default function TeacherForm() {
     setFormData((prev) => ({
       ...prev,
       selectedDisability: disabilityId,
-      disabilityAnswers: new Array(10).fill(-1),
+      disabilityAnswers: new Array(TEACHER_DISABILITY_QUESTION_COUNT).fill(-1),
     }));
   };
 
@@ -807,24 +748,15 @@ export default function TeacherForm() {
       {result?.planFile && (
         <button
           onClick={() => {
-            const disabilityMap: Record<string, string> = {
-              adhd: "ADHD",
-              "borderline-intelligence": "Borderline-Intelligence",
-              "hearing-impairment": "Hearing-Impairment",
-              "learning-difficulties": "Learning-Disabilities",
-              "visual-impairment": "Visual-Impairment-Braille",
-              "physical-disability": "Physical-Disability",
-              "multiple-disabilities": "Multiple-Disabilities",
-              "intellectual-disability": "Mild-Intellectual-Disability",
-              unified: "Unified",
-            };
-            const fileName = result.planFile
-              ? disabilityMap[result.planFile] || result.planFile
-              : "";
-            if (!fileName) return;
+            // Second copy of the slug-to-code map, now the same lookup as everywhere
+            // else. PDF filenames match the canonical codes.
+            const category = result.planFile
+              ? disabilityFromSlug(result.planFile)
+              : undefined;
+            if (!category) return;
             const link = document.createElement("a");
-            link.href = `/${locale}/${fileName}.pdf`;
-            link.download = fileName;
+            link.href = interventionPlanPath(category.code, locale);
+            link.download = category.code;
             link.click();
           }}
           className="px-6 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-colors inline-flex items-center gap-2 mt-6"
