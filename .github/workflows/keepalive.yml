@@ -26,16 +26,37 @@ jobs:
             exit 1
           fi
 
-          # Hitting PostgREST's root reaches the database itself rather than just the
-          # edge, which is what the inactivity timer actually measures.
-          status=$(curl -s -o /tmp/body -w "%{http_code}" \
+          # Calls get_report() with a zero UUID.
+          #
+          # It has to be this rather than something simpler. `GET /rest/v1/` returns 401 --
+          # Supabase restricts the OpenAPI root, and the publishable key does not grant it.
+          # `GET /rest/v1/submissions` also returns 401, by design: anon holds no SELECT on
+          # that table. get_report is the single thing anon may execute, and it performs a
+          # real indexed lookup against submissions, which is what the inactivity timer
+          # measures. A non-existent id returns null and discloses nothing.
+          status=$(curl -sS -o /tmp/body -w "%{http_code}" \
+            -X POST \
             -H "apikey: $SUPABASE_ANON_KEY" \
             -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
-            "$SUPABASE_URL/rest/v1/")
+            -H "Content-Type: application/json" \
+            -d '{"p_id":"00000000-0000-0000-0000-000000000000","p_token":"0000000000000000000000000000000000000000000000000000"}' \
+            "$SUPABASE_URL/rest/v1/rpc/get_report")
 
-          echo "PostgREST responded $status"
-          if [ "$status" -ge 400 ]; then
-            echo "::error::Unexpected response $status"
-            head -c 500 /tmp/body
+          body=$(cat /tmp/body)
+          echo "HTTP $status, body: $body"
+
+          if [ "$status" != "200" ]; then
+            echo "::error::Expected 200 from get_report, got $status. If this is 401, check \
+          the SUPABASE_ANON_KEY secret. If it is 5xx or a timeout, the project may already \
+          be paused -- restore it from the Supabase dashboard."
             exit 1
           fi
+
+          # A reachable-but-paused project can answer at the edge without the database
+          # running. `null` is what the function returns for an unknown id, so seeing it
+          # proves Postgres actually executed the query.
+          if [ "$body" != "null" ]; then
+            echo "::warning::Expected null for a non-existent report, got: $body"
+          fi
+
+          echo "Database reached; inactivity timer reset."
