@@ -1,14 +1,19 @@
+export type { Database } from "./database.types";
+
 export type {
   AppRole,
-  Database,
   DisabilityType,
   GenderEnum,
   Json,
   ProfileRow,
+  ReportData,
   SubmissionInsert,
+  SubmissionListItem,
+  SubmissionListPage,
   SubmissionRow,
+  SubmissionUpdate,
   SurveyTypeEnum,
-} from "./database.types";
+} from "./aliases";
 
 export { toSubmissionRow } from "./mappers";
 export type { StatisticsResponse } from "./statistics.types";

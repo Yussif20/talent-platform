@@ -57,7 +57,13 @@ export const submissionSchema = z
      * is stored as NULL rather than smuggled into the enum.
      */
     disability: z.enum(DISABILITY_CODES as unknown as [string, ...string[]]).nullable().default(null),
-    disabilityPercent: percent,
+    /**
+     * Null means "not assessed", not "zero severity". Only the teacher form measures
+     * severity, and only when the talent score clears the threshold. The parent form
+     * asks which disability a child has and never scores it -- the legacy client
+     * nevertheless sent a hardcoded 100 for every parent submission.
+     */
+    disabilityPercent: percent.nullable().default(null),
 
     surveyType: z.enum(SURVEY_TYPES),
     /** Null until the respondent rates the service; the rating gates the save. */
@@ -70,8 +76,8 @@ export const submissionSchema = z
     message: "a disability category is required when isDisabled is true",
     path: ["disability"],
   })
-  .refine((s) => s.isDisabled || s.disabilityPercent === 0, {
-    message: "disabilityPercent must be 0 when isDisabled is false",
+  .refine((s) => s.disabilityPercent === null || s.isDisabled, {
+    message: "disabilityPercent can only be set when isDisabled is true",
     path: ["disabilityPercent"],
   })
   .refine((s) => s.checkupDate >= s.birthDate, {

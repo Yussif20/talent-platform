@@ -1,1 +1,161 @@
-﻿{"general":{"totalParticipants":171,"countBySurveyType":{"Parents":51,"Teachers":120}},"talentDisability":{"disabled":{"count":73,"percentage":42.69},"talented":{"count":52,"percentage":30.41},"dualExceptional":{"count":52,"percentage":30.41},"disabilityTypesAmongDisabled":{"Learning-Disabilities":7,"Unified":15,"Mild-Intellectual-Disability":13,"ADHD":9,"Borderline-Intelligence":2,"Hearing-Impairment":19,"Visual-Impairment-Braille":3,"Multiple-Disabilities":5},"disabilityTypesAmongDualExceptional":{"Learning-Disabilities":7,"Mild-Intellectual-Disability":10,"Borderline-Intelligence":2,"Hearing-Impairment":10,"Unified":14,"Visual-Impairment-Braille":3,"ADHD":2,"Multiple-Disabilities":4},"dualExceptionalBySurveyType":{"Parents":30,"Teachers":22},"categories":{"disabledOnly":21,"talentedOnly":0,"dualExceptional":52,"neither":98}},"detailed":{"mostCommonDisabilityType":"Hearing-Impairment","mostCommonDisabilityCount":19},"demographics":{"genderDistribution":{"female":149,"male":22},"genderDistributionTalented":{"female":41,"male":11},"genderDistributionDisabled":{"female":56,"male":17},"genderDistributionDualExceptional":{"female":41,"male":11},"ageGroupDistribution":{"10-14":68,"Below 10":42,"15-18":54,"Above 18":7},"ageGroupDistributionDualExceptional":{"10-14":22,"Below 10":9,"15-18":19,"Above 18":2}},"temporal":{"numberOfSubmissions":171},"kpis":{"percentageDisabled":42.69,"percentageDualExceptional":30.41,"averageTalentPercent":42.49,"averageDisabilityPercent":38.95,"averageSatisfactionPercent":77.05},"satisfaction":{"averageSatisfaction":77.05,"satisfactionDistribution":{"75.00":59,"50.00":19,"25.00":20,"100.00":73},"satisfactionBySurveyType":{"Parents":{"75.00":15,"100.00":32,"50.00":2,"25.00":2},"Teachers":{"50.00":17,"25.00":18,"100.00":41,"75.00":44}},"satisfactionByGender":{"female":{"75.00":50,"50.00":19,"25.00":20,"100.00":60},"male":{"75.00":9,"100.00":13}},"satisfactionByTalentStatus":{"Talented":{"75.00":12,"50.00":2,"100.00":37,"25.00":1},"Not Talented":{"50.00":17,"25.00":19,"75.00":47,"100.00":36}},"satisfactionByDisabilityStatus":{"Disabled":{"75.00":21,"100.00":47,"50.00":3,"25.00":2},"Not Disabled":{"50.00":16,"25.00":18,"100.00":26,"75.00":38}}},"filteredDateRange":null}
+{
+  "general": {
+    "totalParticipants": 171,
+    "countBySurveyType": {
+      "Parents": 51,
+      "Teachers": 120
+    }
+  },
+  "talentDisability": {
+    "disabled": {
+      "count": 73,
+      "percentage": 42.69
+    },
+    "talented": {
+      "count": 52,
+      "percentage": 30.41
+    },
+    "dualExceptional": {
+      "count": 52,
+      "percentage": 30.41
+    },
+    "disabilityTypesAmongDisabled": {
+      "Learning-Disabilities": 7,
+      "Unified": 15,
+      "Mild-Intellectual-Disability": 13,
+      "ADHD": 9,
+      "Borderline-Intelligence": 2,
+      "Hearing-Impairment": 19,
+      "Visual-Impairment-Braille": 3,
+      "Multiple-Disabilities": 5
+    },
+    "disabilityTypesAmongDualExceptional": {
+      "Learning-Disabilities": 7,
+      "Mild-Intellectual-Disability": 10,
+      "Borderline-Intelligence": 2,
+      "Hearing-Impairment": 10,
+      "Unified": 14,
+      "Visual-Impairment-Braille": 3,
+      "ADHD": 2,
+      "Multiple-Disabilities": 4
+    },
+    "dualExceptionalBySurveyType": {
+      "Parents": 30,
+      "Teachers": 22
+    },
+    "categories": {
+      "disabledOnly": 21,
+      "talentedOnly": 0,
+      "dualExceptional": 52,
+      "neither": 98
+    }
+  },
+  "detailed": {
+    "mostCommonDisabilityType": "Hearing-Impairment",
+    "mostCommonDisabilityCount": 19
+  },
+  "demographics": {
+    "genderDistribution": {
+      "female": 149,
+      "male": 22
+    },
+    "genderDistributionTalented": {
+      "female": 41,
+      "male": 11
+    },
+    "genderDistributionDisabled": {
+      "female": 56,
+      "male": 17
+    },
+    "genderDistributionDualExceptional": {
+      "female": 41,
+      "male": 11
+    },
+    "ageGroupDistribution": {
+      "10-14": 68,
+      "Below 10": 42,
+      "15-18": 54,
+      "Above 18": 7
+    },
+    "ageGroupDistributionDualExceptional": {
+      "10-14": 22,
+      "Below 10": 9,
+      "15-18": 19,
+      "Above 18": 2
+    }
+  },
+  "temporal": {
+    "numberOfSubmissions": 171
+  },
+  "kpis": {
+    "percentageDisabled": 42.69,
+    "percentageDualExceptional": 30.41,
+    "averageTalentPercent": 42.49,
+    "averageDisabilityPercent": 38.95,
+    "averageSatisfactionPercent": 77.05
+  },
+  "satisfaction": {
+    "averageSatisfaction": 77.05,
+    "satisfactionDistribution": {
+      "75.00": 59,
+      "50.00": 19,
+      "25.00": 20,
+      "100.00": 73
+    },
+    "satisfactionBySurveyType": {
+      "Parents": {
+        "75.00": 15,
+        "100.00": 32,
+        "50.00": 2,
+        "25.00": 2
+      },
+      "Teachers": {
+        "50.00": 17,
+        "25.00": 18,
+        "100.00": 41,
+        "75.00": 44
+      }
+    },
+    "satisfactionByGender": {
+      "female": {
+        "75.00": 50,
+        "50.00": 19,
+        "25.00": 20,
+        "100.00": 60
+      },
+      "male": {
+        "75.00": 9,
+        "100.00": 13
+      }
+    },
+    "satisfactionByTalentStatus": {
+      "Talented": {
+        "75.00": 12,
+        "50.00": 2,
+        "100.00": 37,
+        "25.00": 1
+      },
+      "Not Talented": {
+        "50.00": 17,
+        "25.00": 19,
+        "75.00": 47,
+        "100.00": 36
+      }
+    },
+    "satisfactionByDisabilityStatus": {
+      "Disabled": {
+        "75.00": 21,
+        "100.00": 47,
+        "50.00": 3,
+        "25.00": 2
+      },
+      "Not Disabled": {
+        "50.00": 16,
+        "25.00": 18,
+        "100.00": 26,
+        "75.00": 38
+      }
+    }
+  },
+  "filteredDateRange": null
+}
