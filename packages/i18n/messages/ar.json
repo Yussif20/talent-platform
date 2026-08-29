@@ -1,0 +1,44 @@
+{
+  "Common": {
+    "surveyType": {
+      "Parents": "أولياء الأمور",
+      "Teachers": "المعلمون"
+    },
+    "gender": {
+      "male": "ذكر",
+      "female": "أنثى"
+    },
+    "ageGroup": {
+      "Below 10": "أقل من 10",
+      "10-14": "10 - 14",
+      "15-18": "15 - 18",
+      "Above 18": "أكبر من 18"
+    },
+    "status": {
+      "talented": "موهوب",
+      "notTalented": "غير موهوب",
+      "disabled": "من ذوي الإعاقة",
+      "notDisabled": "من غير ذوي الإعاقة",
+      "dualExceptional": "مزدوج الاستثنائية"
+    },
+    "loading": "جاري التحميل",
+    "error": "حدث خطأ ما",
+    "retry": "إعادة المحاولة"
+  },
+  "Switch": {
+    "label": "اللغة",
+    "toArabic": "العربية",
+    "toEnglish": "English"
+  },
+  "Footer": {
+    "companyDescription": "جسر المواهب - دعم الطلاب مزدوجي الاستثنائية من خلال التقييم الشامل والتخطيط الفردي.",
+    "quickLinks": "روابط سريعة",
+    "home": "الرئيسية",
+    "contact": "تواصل معنا",
+    "email": "support@talentbridge.edu",
+    "disclaimer": "هذه الأداة مخصصة لأغراض الفحص التعليمي فقط ولا تشكل تشخيصاً طبياً أو نفسياً.",
+    "rights": "جميع الحقوق محفوظة.",
+    "privacyPolicy": "سياسة الخصوصية",
+    "termsConditions": "الشروط والأحكام"
+  }
+}

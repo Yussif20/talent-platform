@@ -1,0 +1,44 @@
+{
+  "Common": {
+    "surveyType": {
+      "Parents": "Parents",
+      "Teachers": "Teachers"
+    },
+    "gender": {
+      "male": "Male",
+      "female": "Female"
+    },
+    "ageGroup": {
+      "Below 10": "Below 10",
+      "10-14": "10-14",
+      "15-18": "15-18",
+      "Above 18": "Above 18"
+    },
+    "status": {
+      "talented": "Talented",
+      "notTalented": "Not Talented",
+      "disabled": "Disabled",
+      "notDisabled": "Not Disabled",
+      "dualExceptional": "Twice-Exceptional"
+    },
+    "loading": "Loading",
+    "error": "Something went wrong",
+    "retry": "Try again"
+  },
+  "Switch": {
+    "label": "Language",
+    "toArabic": "Arabic",
+    "toEnglish": "English"
+  },
+  "Footer": {
+    "companyDescription": "TalentBridge - Supporting twice-exceptional students through comprehensive assessment and individualized planning.",
+    "quickLinks": "Quick Links",
+    "home": "Home",
+    "contact": "Contact Us",
+    "email": "support@talentbridge.edu",
+    "disclaimer": "This tool is for educational screening purposes only and does not constitute a medical or psychological diagnosis.",
+    "rights": "All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsConditions": "Terms & Conditions"
+  }
+}

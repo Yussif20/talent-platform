@@ -1,0 +1,32 @@
+{
+  "name": "talent-bridge-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bilingual twice-exceptional (2e) student screening platform: public assessment forms and an analytics dashboard for special-education specialists.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:forms": "turbo run dev --filter=@talent/forms",
+    "dev:dashboard": "turbo run dev --filter=@talent/dashboard",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "db:start": "supabase start",
+    "db:reset": "supabase db reset",
+    "db:types": "supabase gen types typescript --local > packages/db/src/database.types.ts",
+    "db:seed": "tsx scripts/seed.ts",
+    "db:verify": "tsx scripts/verify-contract.ts"
+  },
+  "devDependencies": {
+    "supabase": "^2.22.6",
+    "tsx": "^4.19.2",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20.11"
+  }
+}
