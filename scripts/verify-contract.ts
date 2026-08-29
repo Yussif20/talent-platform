@@ -15,6 +15,7 @@
  */
 import { createClient } from "@supabase/supabase-js";
 import { readFileSync } from "node:fs";
+import { randomBytes } from "node:crypto";
 import { resolve } from "node:path";
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -26,8 +27,17 @@ if (!url || !anon || !service) {
   process.exit(1);
 }
 
-const TEST_EMAIL = "contract-check@talentbridge.local";
-const TEST_PASSWORD = "contract-check-pw-8f3a1c";
+/**
+ * A throwaway staff account, created for this run and deleted in `finally`.
+ *
+ * Both the address and the password are randomised per run. An earlier version hardcoded
+ * them, which meant running this against a hosted project left a `specialist`-role
+ * account behind whose password was published in this very file -- readable by anyone
+ * with the repository, and able to read every submission.
+ */
+const RUN_ID = randomBytes(6).toString("hex");
+const TEST_EMAIL = `contract-check+${RUN_ID}@talentbridge.local`;
+const TEST_PASSWORD = randomBytes(24).toString("base64url");
 
 type Shape = string | { [key: string]: Shape };
 
@@ -87,8 +97,12 @@ function compare(legacy: Shape, actual: Shape, path: string) {
   }
 }
 
+let createdUserId: string | null = null;
+let adminClient: ReturnType<typeof createClient> | null = null;
+
 async function main() {
   const admin = createClient(url!, service!, { auth: { persistSession: false } });
+  adminClient = admin;
 
   // 1. Anonymous callers must be refused.
   const anonClient = createClient(url!, anon!, { auth: { persistSession: false } });
@@ -100,19 +114,16 @@ async function main() {
     console.log(`  PASS  anon refused (${anonResult.error.code ?? ""} ${anonResult.error.message.slice(0, 60)})`);
   }
 
-  // 2. Ensure a staff account exists.
-  const existing = await admin.auth.admin.listUsers();
-  const found = existing.data.users.find((u) => u.email === TEST_EMAIL);
-  let userId = found?.id;
-  if (!userId) {
-    const created = await admin.auth.admin.createUser({
-      email: TEST_EMAIL,
-      password: TEST_PASSWORD,
-      email_confirm: true,
-    });
-    if (created.error) throw created.error;
-    userId = created.data.user!.id;
-  }
+  // 2. Create the throwaway staff account for this run.
+  const created = await admin.auth.admin.createUser({
+    email: TEST_EMAIL,
+    password: TEST_PASSWORD,
+    email_confirm: true,
+  });
+  if (created.error) throw created.error;
+  const userId = created.data.user!.id;
+  createdUserId = userId;
+
   const promoted = await admin.from("profiles").update({ role: "specialist" }).eq("id", userId);
   if (promoted.error) throw promoted.error;
 
@@ -181,7 +192,19 @@ function countKeys(shape: Shape): number {
   return Object.values(shape).reduce<number>((n, v) => n + countKeys(v), 0);
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+main()
+  .catch((err) => {
+    console.error(err);
+    process.exitCode = 1;
+  })
+  .finally(async () => {
+    // The account must not outlive the run, whether it passed or threw.
+    if (createdUserId && adminClient) {
+      const { error } = await adminClient.auth.admin.deleteUser(createdUserId);
+      console.log(
+        error
+          ? `  WARNING: could not delete the temporary account ${TEST_EMAIL}: ${error.message}`
+          : "  cleaned up the temporary staff account",
+      );
+    }
+  });
