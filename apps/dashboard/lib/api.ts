@@ -1,92 +1,34 @@
 import type { StatisticsResponse } from "@/types/statistics";
 
 /**
- * Fetch statistics summary data via Next.js API route (proxy)
+ * Fetches the statistics summary through the app's own API route.
+ *
+ * Unchanged across the backend migration -- the route behind `/api/statistics` now calls
+ * a Postgres function instead of forwarding to the retired .NET service, but the shape it
+ * returns is identical, so nothing here or in any chart component had to move.
+ *
+ * `downloadExcelReport` and `triggerDownload` used to live here. The export is built in
+ * the browser now; see lib/excel.ts.
  */
 export async function fetchStatistics(
   startDate?: string,
-  endDate?: string
+  endDate?: string,
 ): Promise<StatisticsResponse> {
-  try {
-    let url = "/api/statistics";
+  let url = "/api/statistics";
 
-    // Add date filters if provided
-    if (startDate && endDate) {
-      const params = new URLSearchParams({
-        fromDate: startDate,
-        toDate: endDate,
-      });
-      url += `?${params.toString()}`;
-    }
-
-    const response = await fetch(url, {
-      headers: {
-        Accept: "application/json",
-      },
-      cache: "no-store", // Always fetch fresh data
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(
-        errorData.error || `HTTP error! status: ${response.status}`
-      );
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error fetching statistics:", error);
-    throw error;
+  if (startDate && endDate) {
+    url += `?${new URLSearchParams({ fromDate: startDate, toDate: endDate }).toString()}`;
   }
-}
 
-/**
- * Download Excel report via Next.js API route (proxy)
- */
-export async function downloadExcelReport(
-  startDate?: string,
-  endDate?: string
-): Promise<Blob> {
-  try {
-    let url = "/api/statistics/export";
+  const response = await fetch(url, {
+    headers: { Accept: "application/json" },
+    cache: "no-store",
+  });
 
-    // Add date filters if provided
-    if (startDate && endDate) {
-      const params = new URLSearchParams({
-        fromDate: startDate,
-        toDate: endDate,
-      });
-      url += `?${params.toString()}`;
-    }
-
-    const response = await fetch(url, {
-      headers: {
-        Accept: "*/*",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to download report");
-    }
-
-    return response.blob();
-  } catch (error) {
-    console.error("Error downloading Excel report:", error);
-    throw error;
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
   }
-}
 
-/**
- * Trigger file download from blob
- */
-export function triggerDownload(blob: Blob, filename: string): void {
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  window.URL.revokeObjectURL(url);
-  document.body.removeChild(a);
+  return response.json();
 }

@@ -23,7 +23,10 @@
     },
     "loading": "جاري التحميل",
     "error": "حدث خطأ ما",
-    "retry": "إعادة المحاولة"
+    "retry": "إعادة المحاولة",
+    "language": "اللغة",
+    "theme": "المظهر",
+    "settings": "الإعدادات"
   },
   "Switch": {
     "label": "اللغة",
@@ -39,6 +42,13 @@
     "disclaimer": "هذه الأداة مخصصة لأغراض الفحص التعليمي فقط ولا تشكل تشخيصاً طبياً أو نفسياً.",
     "rights": "جميع الحقوق محفوظة.",
     "privacyPolicy": "سياسة الخصوصية",
-    "termsConditions": "الشروط والأحكام"
+    "termsConditions": "الشروط والأحكام",
+    "specializedEducation": "تعليم متخصص",
+    "emailHint": "للاستفسارات والدعم",
+    "importantNotice": "إشعار مهم",
+    "active": "نشط",
+    "secure": "آمن ومحمي",
+    "approved": "معتمد تعليمياً",
+    "copyright": "© {year} TalentBridge."
   }
 }

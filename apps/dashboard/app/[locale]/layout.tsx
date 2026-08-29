@@ -1,20 +1,19 @@
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Inter, Tajawal } from "next/font/google";
-import { routing } from "@/i18n/routing";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import { direction, isLocale, routing } from "@/i18n/routing";
+import { Footer, Header, type NavLink } from "@talent/ui";
+import { createClient } from "@talent/db/server";
+import SignOutButton from "@/components/SignOutButton";
 import "../globals.css";
 
-// English font - Inter
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
 });
 
-// Arabic font - Tajawal
 const tajawal = Tajawal({
   subsets: ["arabic"],
   weight: ["200", "300", "400", "500", "700", "800", "900"],
@@ -34,33 +33,45 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  if (!isLocale(locale)) notFound();
 
-  // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes(locale as "en" | "ar")) {
-    notFound();
-  }
-
-  // Providing all messages to the client side is the easiest way to get started
   const messages = await getMessages();
-  const direction = locale === "ar" ? "rtl" : "ltr";
-  const fontClass = locale === "ar" ? tajawal.variable : inter.variable;
+  const t = await getTranslations({ locale, namespace: "Header" });
+
+  // Links are passed in rather than hardcoded in the component. The shared Navigation
+  // previously baked in the forms app's routes, which is why this app had its header
+  // and mobile nav commented out entirely rather than linking to pages it lacks.
+  const links: NavLink[] = [
+    { name: t("statistics"), href: `/${locale}` },
+    { name: t("submissions"), href: `/${locale}/submissions` },
+  ];
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   return (
-    <html lang={locale} dir={direction} className={fontClass}>
+    <html
+      lang={locale}
+      dir={direction(locale)}
+      className={locale === "ar" ? tajawal.variable : inter.variable}
+      suppressHydrationWarning
+    >
       <head>
+        {/*
+          Applies the stored theme before first paint. Without it the page renders light
+          and then flips, because the class is otherwise only set once React hydrates.
+        */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
                 try {
-                  const savedTheme = localStorage.getItem('theme');
-                  const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  const theme = savedTheme || (systemDark ? 'dark' : 'light');
-                  if (theme === 'dark') {
-                    document.documentElement.classList.add('dark');
-                  } else {
-                    document.documentElement.classList.remove('dark');
-                  }
+                  var saved = localStorage.getItem('theme');
+                  var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  var theme = saved || (systemDark ? 'dark' : 'light');
+                  document.documentElement.classList.toggle('dark', theme === 'dark');
                 } catch (e) {}
               })();
             `,
@@ -69,9 +80,9 @@ export default async function LocaleLayout({
       </head>
       <body className="min-h-screen flex flex-col">
         <NextIntlClientProvider messages={messages}>
-          {/* <Header /> */}
-          <main className="flex-1">{children}</main>
-          <Footer />
+          {user && <Header links={links} actions={<SignOutButton />} />}
+          <main className={`flex-1 ${user ? "" : "pt-0"}`}>{children}</main>
+          <Footer links={links} />
         </NextIntlClientProvider>
       </body>
     </html>

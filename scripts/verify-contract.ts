@@ -92,10 +92,7 @@ async function main() {
 
   // 1. Anonymous callers must be refused.
   const anonClient = createClient(url!, anon!, { auth: { persistSession: false } });
-  const anonResult = await anonClient.rpc("get_statistics_summary", {
-    from_date: null,
-    to_date: null,
-  });
+  const anonResult = await anonClient.rpc("get_statistics_summary", {});
   if (!anonResult.error) {
     problems.push("SECURITY: anonymous caller received statistics");
     console.error("  FAIL  anon was served statistics");
@@ -128,10 +125,7 @@ async function main() {
   if (signIn.error) throw signIn.error;
   console.log(`  PASS  signed in as specialist`);
 
-  const { data, error } = await userClient.rpc("get_statistics_summary", {
-    from_date: null,
-    to_date: null,
-  });
+  const { data, error } = await userClient.rpc("get_statistics_summary", {});
   if (error) throw error;
 
   // 4. Compare against the captured legacy contract.
@@ -159,11 +153,6 @@ async function main() {
 
   // 6. list_submissions
   const list = await userClient.rpc("list_submissions", {
-    from_date: null,
-    to_date: null,
-    search: null,
-    survey_type_filter: null,
-    disability_filter: null,
     page_size: 5,
     page_offset: 0,
   });

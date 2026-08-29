@@ -1,33 +1,30 @@
 "use client";
 
-import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { NavLink } from "./types";
 
-export default function Navigation() {
-  const t = useTranslations("Header");
-  const locale = useLocale();
+/**
+ * Desktop navigation. Links are supplied by the app rather than hardcoded -- see the
+ * note on NavLink for why.
+ */
+export default function Navigation({ links }: { links: NavLink[] }) {
   const pathname = usePathname();
 
-  const navigation = [
-    { name: t("home"), href: `/${locale}` },
-    { name: t("teacherForm"), href: `/${locale}/teacher-form` },
-    { name: t("parentForm"), href: `/${locale}/parent-form` },
-  ];
-
   const isActive = (href: string) => {
-    if (href === `/${locale}`) {
-      return pathname === `/${locale}` || pathname === `/${locale}/`;
-    }
-    return pathname === href;
+    // The locale root ("/ar") must not match every path beneath it.
+    const normalised = href.replace(/\/$/, "");
+    const current = pathname.replace(/\/$/, "");
+    return current === normalised;
   };
 
   return (
     <nav className="hidden md:flex items-center gap-2 relative">
-      {navigation.map((item) => (
+      {links.map((item) => (
         <Link
           key={item.href}
           href={item.href}
+          aria-current={isActive(item.href) ? "page" : undefined}
           className={`flex items-center px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-md
             ${
               isActive(item.href)

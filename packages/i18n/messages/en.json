@@ -23,7 +23,10 @@
     },
     "loading": "Loading",
     "error": "Something went wrong",
-    "retry": "Try again"
+    "retry": "Try again",
+    "language": "Language",
+    "theme": "Theme",
+    "settings": "Settings"
   },
   "Switch": {
     "label": "Language",
@@ -39,6 +42,13 @@
     "disclaimer": "This tool is for educational screening purposes only and does not constitute a medical or psychological diagnosis.",
     "rights": "All rights reserved.",
     "privacyPolicy": "Privacy Policy",
-    "termsConditions": "Terms & Conditions"
+    "termsConditions": "Terms & Conditions",
+    "specializedEducation": "Specialized Education",
+    "emailHint": "For inquiries and support",
+    "importantNotice": "Important Notice",
+    "active": "Active",
+    "secure": "Secure & Protected",
+    "approved": "Educationally Approved",
+    "copyright": "© {year} TalentBridge."
   }
 }

@@ -129,7 +129,9 @@ export default function SatisfactionChart({ data }: SatisfactionChartProps) {
               contentStyle={getTooltipStyle(isDark)}
               itemStyle={{ color: isDark ? "#f9fafb" : "#111827" }}
               labelStyle={{ color: isDark ? "#f9fafb" : "#111827" }}
-              formatter={(value: number) => [value, t("chartLabels.count")]}
+              // recharts 3 widened the formatter signature to ValueType, which may be
+              // an array or undefined, so the callback can no longer declare `number`.
+              formatter={(value) => [Number(value ?? 0), t("chartLabels.count")]}
             />
             <Legend
               verticalAlign="bottom"

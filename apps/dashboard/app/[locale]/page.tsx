@@ -25,8 +25,7 @@ import DemographicsCharts from "@/components/statistics/DemographicsCharts";
 import AgeDistribution from "@/components/statistics/AgeDistribution";
 import SatisfactionChart from "@/components/statistics/SatisfactionChart";
 import DualExceptionalBySurveyType from "@/components/statistics/DualExceptionalBySurveyType";
-import LanguageSelector from "@/components/LanguageSelector";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
+import { LanguageSelector, ThemeSwitcher } from "@talent/ui";
 
 export default function StatisticsPage() {
   const locale = useLocale();
@@ -171,6 +170,7 @@ export default function StatisticsPage() {
           </p>
 
           <ExportButton
+            stats={data}
             startDate={dateFilter?.startDate}
             endDate={dateFilter?.endDate}
           />

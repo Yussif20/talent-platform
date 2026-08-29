@@ -14,7 +14,6 @@
     "startDate": "Start Date",
     "endDate": "End Date",
     "allTime": "All Time",
-
     "kpis": {
       "totalParticipants": "Total Participants",
       "percentageDisabled": "Percentage Disabled",
@@ -22,7 +21,6 @@
       "averageTalent": "Average Talent Score",
       "averageDisability": "Average Disability Score"
     },
-
     "sections": {
       "overview": "Overview",
       "surveyTypes": "Survey Type Distribution",
@@ -35,19 +33,16 @@
       "satisfaction": "User Satisfaction",
       "dualExceptionalBySurveyType": "Dual Exceptional by Survey Type"
     },
-
     "categories": {
       "disabledOnly": "Disabled Only",
       "talentedOnly": "Talented Only",
       "dualExceptional": "Dual Exceptional",
       "neither": "Neither"
     },
-
     "surveyTypes": {
       "parents": "Parents",
       "teachers": "Teachers"
     },
-
     "demographics": {
       "male": "Male",
       "female": "Female",
@@ -55,27 +50,6 @@
       "talented": "Talented",
       "disabled": "Disabled"
     },
-
-    "disabilityTypes": {
-      "ADHD": "ADHD",
-      "Borderline-Intelligence": "Borderline Intelligence",
-      "Hearing-Impairment": "Hearing Impairment",
-      "Learning-Disabilities": "Learning Disabilities",
-      "Visual-Impairment-Braille": "Visual Impairment (Braille)",
-      "Physical-Disability": "Physical Disability",
-      "Multiple-Disabilities": "Multiple Disabilities",
-      "Mild-Intellectual-Disability": "Mild Intellectual Disability",
-      "Unified": "Unified",
-      "Learning-Diffculties": "Learning Difficulties",
-      "Mental": "Mental",
-      "Autism": "Autism",
-      "autism": "Autism",
-      "hearing-impairment": "Hearing Impairment",
-      "learning-difficulties": "Learning Difficulties",
-      "Visual": "Visual",
-      "Visual-ImpairmentBraille": "Visual Impairment (Braille)"
-    },
-
     "mostCommon": "Most Common Disability",
     "topDisabilities": "Top 10 Disability Types (Among Disabled)",
     "topDisabilitiesDualExceptional": "Top 10 Disability Types (Among Dual Exceptional)",
@@ -93,19 +67,48 @@
       "percentage": "Percentage",
       "participants": "Participants",
       "total": "Total"
-    }
+    },
+    "exportTitle": "TalentBridge — Screening Statistics",
+    "generatedOn": "Generated on",
+    "dateRange": "Date range",
+    "generalStats": "General",
+    "keyIndicators": "Key indicators",
+    "totalParticipants": "Total participants",
+    "parents": "Parents",
+    "teachers": "Teachers",
+    "percentageDisabled": "Disabled (%)",
+    "percentageDualExceptional": "Twice-exceptional (%)",
+    "averageTalentPercent": "Average talent (%)",
+    "averageDisabilityPercent": "Average assessed disability (%)",
+    "disabledOnly": "Disabled only",
+    "talentedOnly": "Talented only",
+    "dualExceptional": "Twice-exceptional",
+    "neither": "Neither",
+    "disabilityBreakdown": "Disability breakdown",
+    "category": "Category",
+    "amongDisabled": "Among disabled",
+    "amongDualExceptional": "Among twice-exceptional",
+    "genderDistribution": "Gender distribution",
+    "male": "Male",
+    "female": "Female",
+    "ageDistribution": "Age distribution",
+    "ageDistributionDualExceptional": "Age distribution (twice-exceptional)",
+    "satisfactionDistribution": "Satisfaction distribution",
+    "sheetSummary": "Summary",
+    "sheetDisabilities": "Disabilities",
+    "sheetDemographics": "Demographics",
+    "sheetSatisfaction": "Satisfaction",
+    "exportFailed": "Export failed"
   },
-
   "Header": {
-    "statistics": "Statistics"
+    "statistics": "Statistics",
+    "submissions": "Submissions"
   },
-
   "Switch": {
     "label": "Switch Language",
     "toEnglish": "English",
     "toArabic": "العربية"
   },
-
   "Footer": {
     "companyDescription": "TalentBridge - Supporting twice-exceptional students through comprehensive assessment and individualized planning.",
     "quickLinks": "Quick Links",
@@ -117,5 +120,19 @@
     "rights": "All rights reserved.",
     "privacyPolicy": "Privacy Policy",
     "termsConditions": "Terms & Conditions"
+  },
+  "Auth": {
+    "title": "Statistics Dashboard",
+    "subtitle": "Sign in to view screening analytics.",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "or": "or",
+    "demoSignIn": "View as demo specialist",
+    "demoNote": "The demo account is read-only: it can view every chart and record but cannot change or delete anything.",
+    "invalidCredentials": "That email and password did not match an account.",
+    "demoUnavailable": "The demo account is not available. See SETUP.md to create it.",
+    "signedInAs": "Signed in as {name}"
   }
 }

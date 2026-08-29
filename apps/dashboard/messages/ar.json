@@ -14,7 +14,6 @@
     "startDate": "تاريخ البداية",
     "endDate": "تاريخ النهاية",
     "allTime": "كل الوقت",
-
     "kpis": {
       "totalParticipants": "إجمالي المشاركين",
       "percentageDisabled": "نسبة ذوي الإعاقة",
@@ -22,7 +21,6 @@
       "averageTalent": "متوسط درجة الموهبة",
       "averageDisability": "متوسط درجة الإعاقة"
     },
-
     "sections": {
       "overview": "نظرة عامة",
       "surveyTypes": "توزيع أنواع الاستبيان",
@@ -35,19 +33,16 @@
       "satisfaction": "رضا المستخدمين",
       "dualExceptionalBySurveyType": "مزدوجو الاستثنائية حسب نوع الاستبيان"
     },
-
     "categories": {
       "disabledOnly": "إعاقة فقط",
       "talentedOnly": "موهبة فقط",
       "dualExceptional": "مزدوج الاستثنائية",
       "neither": "ليس أي منهما"
     },
-
     "surveyTypes": {
       "parents": "أولياء الأمور",
       "teachers": "المعلمون"
     },
-
     "demographics": {
       "male": "ذكر",
       "female": "أنثى",
@@ -55,27 +50,6 @@
       "talented": "الموهوبين",
       "disabled": "ذوي الإعاقة"
     },
-
-    "disabilityTypes": {
-      "ADHD": "اضطراب نقص الانتباه وفرط الحركة",
-      "Borderline-Intelligence": "الذكاء الحدي",
-      "Hearing-Impairment": "الإعاقة السمعية",
-      "Learning-Disabilities": "صعوبات التعلم",
-      "Visual-Impairment-Braille": "الإعاقة البصرية (برايل)",
-      "Physical-Disability": "الإعاقة الجسدية",
-      "Multiple-Disabilities": "إعاقات متعددة",
-      "Mild-Intellectual-Disability": "الإعاقة الذهنية الخفيفة",
-      "Unified": "توحد",
-      "Learning-Diffculties": "صعوبات التعلم",
-      "Mental": "عقلية",
-      "Autism": "التوحد",
-      "autism": "التوحد",
-      "hearing-impairment": "الإعاقة السمعية",
-      "learning-difficulties": "صعوبات التعلم",
-      "Visual": "بصرية",
-      "Visual-ImpairmentBraille": "الإعاقة البصرية (برايل)"
-    },
-
     "mostCommon": "الإعاقة الأكثر شيوعاً",
     "topDisabilities": "ترتيب الاعاقات حسب الأكثر شيوعا (بين ذوي الإعاقة)",
     "topDisabilitiesDualExceptional": "ترتيب الاعاقات حسب الأكثر شيوعا (بين مزدوجي الاستثنائية)",
@@ -93,19 +67,48 @@
       "percentage": "النسبة المئوية",
       "participants": "المشاركون",
       "total": "المجموع"
-    }
+    },
+    "exportTitle": "جسر المواهب — إحصائيات الفحص",
+    "generatedOn": "تاريخ الإنشاء",
+    "dateRange": "النطاق الزمني",
+    "generalStats": "عام",
+    "keyIndicators": "المؤشرات الرئيسية",
+    "totalParticipants": "إجمالي المشاركين",
+    "parents": "أولياء الأمور",
+    "teachers": "المعلمون",
+    "percentageDisabled": "نسبة ذوي الإعاقة (٪)",
+    "percentageDualExceptional": "نسبة مزدوجي الاستثنائية (٪)",
+    "averageTalentPercent": "متوسط نسبة الموهبة (٪)",
+    "averageDisabilityPercent": "متوسط شدة الإعاقة المقيّمة (٪)",
+    "disabledOnly": "ذوو إعاقة فقط",
+    "talentedOnly": "موهوبون فقط",
+    "dualExceptional": "مزدوجو الاستثنائية",
+    "neither": "لا ينطبق",
+    "disabilityBreakdown": "توزيع الإعاقات",
+    "category": "الفئة",
+    "amongDisabled": "ضمن ذوي الإعاقة",
+    "amongDualExceptional": "ضمن مزدوجي الاستثنائية",
+    "genderDistribution": "التوزيع حسب الجنس",
+    "male": "ذكر",
+    "female": "أنثى",
+    "ageDistribution": "التوزيع العمري",
+    "ageDistributionDualExceptional": "التوزيع العمري (مزدوجو الاستثنائية)",
+    "satisfactionDistribution": "توزيع الرضا",
+    "sheetSummary": "الملخص",
+    "sheetDisabilities": "الإعاقات",
+    "sheetDemographics": "الديموغرافيا",
+    "sheetSatisfaction": "الرضا",
+    "exportFailed": "فشل التصدير"
   },
-
   "Header": {
-    "statistics": "الإحصائيات"
+    "statistics": "الإحصائيات",
+    "submissions": "السجلات"
   },
-
   "Switch": {
     "label": "تبديل اللغة",
     "toEnglish": "English",
     "toArabic": "العربية"
   },
-
   "Footer": {
     "companyDescription": "جسر المواهب - دعم الطلاب مزدوجي الاستثنائية من خلال التقييم الشامل والتخطيط الفردي.",
     "quickLinks": "روابط سريعة",
@@ -117,5 +120,19 @@
     "rights": "جميع الحقوق محفوظة.",
     "privacyPolicy": "سياسة الخصوصية",
     "termsConditions": "الشروط والأحكام"
+  },
+  "Auth": {
+    "title": "لوحة الإحصائيات",
+    "subtitle": "سجّل الدخول لعرض تحليلات الفحص.",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "signIn": "تسجيل الدخول",
+    "signOut": "تسجيل الخروج",
+    "or": "أو",
+    "demoSignIn": "الدخول كأخصائي تجريبي",
+    "demoNote": "الحساب التجريبي للاطلاع فقط: يمكنه عرض جميع الرسوم والسجلات دون تعديل أو حذف أي بيانات.",
+    "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+    "demoUnavailable": "الحساب التجريبي غير متاح. راجع SETUP.md لإنشائه.",
+    "signedInAs": "مسجّل الدخول باسم {name}"
   }
 }

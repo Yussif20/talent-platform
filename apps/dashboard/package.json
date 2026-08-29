@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@supabase/ssr": "^0.6.1",
+    "@supabase/ssr": "^0.12.5",
     "@talent/db": "*",
     "@talent/domain": "*",
     "@talent/i18n": "*",

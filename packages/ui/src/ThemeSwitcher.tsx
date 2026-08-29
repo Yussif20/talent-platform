@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
 
 export default function ThemeSwitcher() {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
   const [isAnimating, setIsAnimating] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
@@ -15,7 +15,7 @@ export default function ThemeSwitcher() {
   }, []);
 
   const themeToggleHandler = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
+    const newTheme: "light" | "dark" = theme === "light" ? "dark" : "light";
     setIsAnimating(true);
     document.documentElement.classList.toggle("dark", newTheme === "dark");
     setTheme(newTheme);
@@ -32,7 +32,7 @@ export default function ThemeSwitcher() {
       >
         <div className="flex items-center p-1 bg-white/40 dark:bg-gray-700 rounded-xl shadow-inner border border-gray-300 dark:border-gray-600 transition-all duration-300 backdrop-blur-sm opacity-50">
           <div className="w-10 h-8 rounded-lg bg-gray-200 dark:bg-gray-600"></div>
-          <div className="w-10 h-8 rounded-lg bg-gray-200 dark:bg-gray-600 ml-1"></div>
+          <div className="w-10 h-8 rounded-lg bg-gray-200 dark:bg-gray-600 ms-1"></div>
         </div>
       </div>
     );
@@ -89,7 +89,7 @@ export default function ThemeSwitcher() {
         </div>
         {/* Subtle indicator dot */}
         <div
-          className={`absolute -top-1 -right-1 w-2 h-2 rounded-full transition-all duration-300 ${
+          className={`absolute -top-1 -end-1 w-2 h-2 rounded-full transition-all duration-300 ${
             theme === "light" ? "bg-[#b8860b]" : "bg-blue-800"
           } ${isAnimating ? "animate-bounce" : ""}`}
         ></div>
@@ -125,7 +125,7 @@ export default function ThemeSwitcher() {
 
           {/* Active state indicator dot */}
           <div
-            className={`absolute -top-1 -right-1 w-3 h-3 rounded-full transition-all duration-300 ${
+            className={`absolute -top-1 -end-1 w-3 h-3 rounded-full transition-all duration-300 ${
               theme === "light"
                 ? "bg-amber-600 shadow-amber-600/50"
                 : "bg-blue-800 shadow-blue-800/50"

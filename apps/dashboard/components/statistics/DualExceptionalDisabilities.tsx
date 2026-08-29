@@ -13,6 +13,7 @@ import {
 } from "recharts";
 import type { StatisticsResponse } from "@/types/statistics";
 import { getChartColors, getTooltipStyle } from "@/lib/chartConfig";
+import { disabilityLabel, type DisabilityCode } from "@talent/domain";
 
 interface DualExceptionalDisabilitiesProps {
   data: StatisticsResponse;
@@ -49,16 +50,15 @@ export default function DualExceptionalDisabilities({
   const disabilityData = Object.entries(
     data.talentDisability.disabilityTypesAmongDualExceptional
   )
-    .map(([name, value]) => {
-      // Normalize the key by replacing spaces with dashes and removing trailing/leading dashes
-      const normalizedKey = name.replace(/\s+/g, "-").replace(/^-+|-+$/g, "");
-      const translatedName = t(`disabilityTypes.${normalizedKey}`);
-
-      return {
-        name: translatedName || name,
-        value,
-      };
-    })
+    .map(([code, value]) => ({
+      // Was: a regex here rewrote "Visual-Impairment-Braille " (trailing space, as the
+      // legacy free-text column stored it) into something the translation file might
+      // have a key for, backed by eight alias entries covering every misspelling seen
+      // in production. The column is an enum now, so the code is always canonical and
+      // the label comes from the one place that defines it.
+      name: disabilityLabel(code as DisabilityCode, locale),
+      value,
+    }))
     .sort((a, b) => b.value - a.value);
   return (
     <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 dark:border-gray-700/50 shadow-lg">

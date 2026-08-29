@@ -1,10 +1,4 @@
-import { defineRouting } from "next-intl/routing";
-import { createNavigation } from "next-intl/navigation";
-
-export const routing = defineRouting({
-  locales: ["en", "ar"],
-  defaultLocale: "en",
-});
-
-export const { Link, redirect, usePathname, useRouter } =
-  createNavigation(routing);
+// Subpath import for the same reason as request.ts: the middleware needs `routing`
+// without dragging next-intl/navigation into the edge bundle.
+export { routing, locales, defaultLocale, direction, isLocale } from "@talent/i18n/routing";
+export type { Locale } from "@talent/i18n/routing";

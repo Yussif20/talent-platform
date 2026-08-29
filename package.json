@@ -18,7 +18,10 @@
     "db:reset": "supabase db reset",
     "db:types": "supabase gen types typescript --local > packages/db/src/database.types.ts",
     "db:seed": "tsx scripts/seed.ts",
-    "db:verify": "tsx scripts/verify-contract.ts"
+    "db:verify": "tsx scripts/verify-contract.ts",
+    "db:accounts": "tsx scripts/provision-accounts.ts",
+    "test:security": "docker exec -i supabase_db_talent-bridge-platform psql -U postgres -d postgres -v ON_ERROR_STOP=1 -f - < supabase/tests/security.sql",
+    "test:scoring": "tsx scripts/verify-scoring.ts"
   },
   "devDependencies": {
     "supabase": "^2.22.6",
