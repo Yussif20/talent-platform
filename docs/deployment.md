@@ -103,8 +103,10 @@ Verified passing 29 Aug 2026 via `workflow_dispatch`.
 
 ## Repository metadata
 
-Set under **Settings → General** on GitHub. Recorded here because it lives only in
-GitHub's UI and is invisible to the repo itself.
+Edited from the repository's **Code page → the "About" panel in the right sidebar → the
+gear icon** — not from Settings, which is where you would reasonably look first and where
+only the social preview lives. Recorded here because these values exist solely in
+GitHub's UI and are invisible to the repository itself.
 
 **Description**
 
@@ -119,9 +121,9 @@ GitHub's UI and is invisible to the repo itself.
 `rtl` `arabic` `monorepo` `turborepo` `recharts` `tailwindcss` `special-education`
 `accessibility`
 
-Also worth setting: a **social preview** image (Settings → General → Social preview) —
-a dashboard screenshot is what renders when the repo is shared on LinkedIn or X, and it
-carries more weight than the description does.
+Also worth setting: a **social preview** image — this one *is* under
+**Settings → General → Social preview**. A dashboard screenshot is what renders when the
+repo is shared on LinkedIn or X, and it carries more weight than the description does.
 
 Naming the Saudi Ministry of Education is confirmed acceptable with the client
 (Aug 2026). If that ever needs softening, the places to change are this description, the
