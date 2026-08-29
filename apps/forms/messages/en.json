@@ -1,0 +1,208 @@
+{
+  "Header": {
+    "home": "Home",
+    "teacherForm": "Teacher Form",
+    "parentForm": "Parent Form",
+    "about": "About",
+    "results": "Results"
+  },
+  "Features": {
+    "sectionTitle1": "How TalentBridge helps identify",
+    "sectionTitle2": "twice-exceptional students?",
+    "assessmentTitle": "Comprehensive Assessment",
+    "assessmentDesc": "Detailed behavioral screening forms for both teachers and parents to identify giftedness and disabilities.",
+    "instantResultsTitle": "Instant Results",
+    "instantResultsDesc": "Immediate scoring and classification with analysis of strengths and challenges.",
+    "planningTitle": "Individualized Planning",
+    "planningDesc": "Customized 4-week intervention plans based on assessment results.",
+    "reportingTitle": "Professional Reports",
+    "reportingDesc": "PDF reports and email delivery for educational professionals and families."
+  },
+  "Hero": {
+    "title": "Supporting Twice-Exceptional Students",
+    "subtitle": "A comprehensive web application aim to identify twice-exceptional students, providing instant assessment results and individualized educational plans.",
+    "teacherCta": "Teacher Form",
+    "parentCta": "Parent Form"
+  },
+  "Switch": {
+    "CTA": {
+      "sectionDescription": "Discover your students' hidden potential and get comprehensive assessments that help develop personalized educational plans"
+    },
+    "label": "Language",
+    "toArabic": "Arabic",
+    "toEnglish": "English"
+  },
+  "ParentForm": {
+    "title": "Parent Assessment Form",
+    "resultPositive": "Positive Results",
+    "subtitle": "Help us understand your child's unique characteristics and behaviors",
+    "instructions": {
+      "title": "Instructions for Parents",
+      "items": [
+        "Think about your child's typical behavior at home and in social settings",
+        "Rate each behavior based on how often you observe it",
+        "Be honest and objective in your observations",
+        "Results are for educational screening purposes only"
+      ]
+    },
+    "form": {
+      "basicInfoTitle": "Basic Information",
+      "childName": "Student Name",
+      "childAge": "Child's Age",
+      "parentEmail": "Your Email Address",
+      "disability": "Disability Type",
+      "disabilitySelect": "Select Disability",
+      "disabilityOptions": {
+        "ADHD": "ADHD",
+        "Borderline_Intelligence": "Borderline Intelligence",
+        "Hearing_Impairment": "Hearing Impairment",
+        "Learning_Disabilities": "Learning Disabilities",
+        "Visual_Impairment_Braille": "Visual Impairment (Braille)",
+        "Physical_Disability": "Physical Disability",
+        "Multiple_Disabilities": "Multiple Disabilities",
+        "Mild_Intellectual_Disability": "Mild Intellectual Disability",
+        "Unified": "Unified"
+      },
+      "downloadPlan": "Download Plan",
+      "grade": "Grade Level",
+      "gender": "Gender",
+      "genderOptions": {
+        "male": "Male",
+        "female": "Female"
+      },
+      "parentName": "Parent Name",
+      "schoolName": "School Name",
+      "birthDate": "Birth Date",
+      "questions": {
+        "title": "Behavioral Characteristics",
+        "subtitle": "Please rate how often you observe each behavior in your child",
+        "q1": "My child shows distinctive abilities or interests in specific areas (such as mathematics, art, technology...).",
+        "q2": "Asks deep or unusual questions that show advanced thinking.",
+        "q3": "Shows contrast between excellence in some areas and clear difficulties in others.",
+        "q4": "Shows feelings of frustration or low self-confidence due to this gap.",
+        "q5": "Interacts enthusiastically with creative or exploratory activities.",
+        "q6": "Has difficulty concentrating or organizing daily tasks.",
+        "q7": "Suffers from difficulties in reading or writing compared to their level in conversation or comprehension.",
+        "q8": "Prefers individual work or isolation over group activities.",
+        "q9": "Shows distraction or hyperactivity, but focuses deeply when doing what they love.",
+        "q10": "Shows unexpected or different responses in social situations.",
+        "q11": "Has rich vocabulary or way of expression compared to their age.",
+        "q12": "Shows speed in learning new concepts or solving practical problems.",
+        "q13": "Uses unconventional methods to express themselves (drawing, writing, creating solutions).",
+        "q14": "Shows creativity or many diverse ideas in a short time.",
+        "q15": "Shows artistic sense or special inclinations in specific areas (music, design, scientific experiments...)."
+      },
+      "options": {
+        "never": "Does Not Apply",
+        "sometimes": "Sometimes",
+        "always": "Always"
+      },
+      "submit": "Submit Assessment",
+      "submitting": "Submitting...",
+      "required": "This field is required",
+      "allQuestionsRequired": "Please answer all questions"
+    },
+    "results": {
+      "title": "Assessment Results",
+      "processing": "Processing your assessment...",
+      "success": "Assessment completed successfully!",
+      "error": "There was an error processing your assessment: {message}",
+      "networkError": "Network error: Please check your internet connection. This might be a CORS issue - try running the app on a server.",
+      "serverError": "Server error: {message}",
+      "percentageScore": "Talent Percentage",
+      "congratulations": "Congratulations!",
+      "twiceExceptional": "Twice-Exceptional Student",
+      "twiceExceptionalMessage": "The results indicate that your child shows strong indicators of being a Twice-Exceptional student (gifted with learning challenges). This means they possess high abilities in certain areas while having some challenges in others.",
+      "notTwiceExceptional": "Not Twice-Exceptional",
+      "notTwiceExceptionalMessage": "The scale results indicate the presence of indicators related to disability only, and insufficient indicators of giftedness at this time. This does not conflict with the possibility of having distinctive abilities in the future, and we recommend following up on progress with the specialized team at your school.",
+      "downloadGuide": "Download Parent Guide",
+      "backToHome": "Back to Home",
+      "teacherForm": "Teacher Form",
+      "saveStatus": {
+        "saved": "Assessment was saved successfully",
+        "notSaved": "Assessment was not saved",
+        "label": "Save status"
+      }
+    },
+    "disclaimer": "These results are for educational screening purposes only and do not constitute a medical or psychological diagnosis. For a comprehensive evaluation, please consult a qualified specialist."
+  },
+  "Footer": {
+    "companyDescription": "TalentBridge - Supporting twice-exceptional students through comprehensive assessment and individualized planning.",
+    "quickLinks": "Quick Links",
+    "home": "Home",
+    "teacherForm": "Teacher Form",
+    "parentForm": "Parent Form",
+    "about": "About",
+    "contact": "Contact Us",
+    "email": "support@talentbridge.edu",
+    "disclaimer": "This tool is for educational screening purposes only and does not constitute a medical or psychological diagnosis.",
+    "rights": "All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsConditions": "Terms & Conditions"
+  },
+  "TeacherForm": {
+    "headerBadge": "Teacher Assessment",
+    "title": "Teacher Assessment Form for Twice-Exceptional Students",
+    "basicInfo": {
+      "title": "Basic Information",
+      "studentName": "Student Name",
+      "gender": "Gender",
+      "genderOptions": { "male": "Male", "female": "Female" },
+      "birthDate": "Birth Date",
+      "examinerName": "Examiner Name",
+      "examDate": "Exam/Observation Date",
+      "examinerTitle": "Examiner Title",
+      "schoolName": "School Name",
+      "grade": "Student's Grade Level"
+    },
+    "general": {
+      "title": "Behavioral Characteristics for Twice-Exceptional Students",
+      "subtitle": "General Behavioral Items"
+    },
+    "disabilitySelect": {
+      "title": "Select Disability Category for Assessment",
+      "subtitle": "Choose the most appropriate category based on your observations of the student"
+    },
+    "physicalDisability": {
+      "title": "Physical Disabilities - Additional Questions",
+      "questions": [
+        "Shows creativity or excellence in mental domains (e.g., analysis, critical thinking, or problem-solving) despite motor challenges.",
+        "Flexibly employs alternatives or assistive tools to showcase talent.",
+        "Clearly expresses thoughts and feelings verbally or in writing despite limited mobility.",
+        "Demonstrates high perseverance and determination to complete tasks compared to peers.",
+        "Innovates strategies to overcome physical constraints to achieve goals.",
+        "Shows high sensitivity and precision in intellectual or creative observations compensating for physical challenges.",
+        "Excels in mental or artistic activities (e.g., digital drawing, writing, programming, mental arithmetic).",
+        "Interacts positively with peers in group activities despite needing physical support.",
+        "Shows mature social and emotional awareness beyond chronological age.",
+        "Shows enthusiasm to participate in enrichment or research activities when appropriate accommodations are provided."
+      ]
+    },
+    "steps": {
+      "info": "Info",
+      "general": "General",
+      "physical": "Physical",
+      "category": "Category",
+      "specific": "Specific"
+    },
+    "buttons": {
+      "previous": "Previous",
+      "next": "Next",
+      "submitAssessment": "Submit Assessment",
+      "submitting": "Submitting...",
+      "backToHome": "Back to Home"
+    },
+    "validation": {
+      "requiredFields": "Please fill all required fields",
+      "answerAllQuestions": "Please answer all questions",
+      "selectDisability": "Please select a disability category"
+    },
+    "results": {
+      "titleSuccess": "Assessment Completed Successfully",
+      "assessmentPercentages": "Assessment Percentages",
+      "talentPercent": "Talent Percent",
+      "disabilityPercent": "Disability Percent",
+      "talentPercentageLabel": "Talent percentage: {percentage}%"
+    }
+  }
+}
