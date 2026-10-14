@@ -1,6 +1,7 @@
 import HeroSection from "../../sections/HeroSection";
 import FeaturesSection from "../../sections/FeaturesSection";
 import AboutSection from "../../sections/AboutSection";
+import TestimonialsSection from "../../sections/TestimonialsSection";
 import CTASection from "../../sections/CTASection";
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
       <HeroSection />
       <FeaturesSection />
       <AboutSection />
+      <TestimonialsSection />
       <CTASection />
     </div>
   );
