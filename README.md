@@ -14,6 +14,8 @@ analytics dashboard the programme's specialists use to read the results.
 | **Dashboard** | **[stats.talentbridge.yousefayman.com](https://stats.talentbridge.yousefayman.com)** — sign in with **View as demo specialist**, no signup |
 | **Stack** | Next.js 15 · React 19 · TypeScript · Tailwind 4 · Supabase (Postgres, Auth, Edge Functions) · Recharts |
 
+![TalentBridge: Arabic screening forms on mobile and the specialists' analytics dashboard](docs/images/dashboard.jpg)
+
 ---
 
 ## What this repository is
