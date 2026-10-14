@@ -92,8 +92,13 @@ npm run db:seed        # deletes where is_demo = true, then inserts 400
 
 ## Keep-alive
 
-`.github/workflows/keepalive.yml` runs Wednesdays at 06:17 UTC. Free Supabase projects
-pause after 7 idle days and stay down until restored by hand.
+`.github/workflows/keepalive.yml` runs daily at 06:17 UTC. Free Supabase projects
+pause after 7 idle days and stay down until restored by hand. It used to run weekly, which
+was too tight: GitHub starts scheduled runs hours late, and the project paused between the
+2 Sep and 9 Sep 2026 runs (restored by hand 14 Oct 2026).
+
+GitHub also disables scheduled workflows in a repository with no commits for 60 days. It
+emails a warning first; re-enable from the Actions tab if that happens.
 
 It calls `get_report()` with a zero UUID — the only function `anon` may execute, and one
 that performs a real indexed lookup. Asserts both HTTP 200 **and** a `null` body, because

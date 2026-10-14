@@ -5,11 +5,12 @@ name: Keep Supabase awake
 # For a portfolio piece that is exactly the failure mode that matters: it works when you
 # build it and is broken the week a recruiter opens it.
 #
-# A weekly read is enough to reset the timer. Wednesdays, so a failure has the rest of
-# the week to be noticed.
+# Daily, not weekly. GitHub starts scheduled runs hours late, so a weekly ping lands just
+# past the 7-day limit: the 2 Sep run succeeded at 11:24 and the 9 Sep run at 11:29 found
+# the project already paused. Daily leaves six spare days for late or skipped runs.
 on:
   schedule:
-    - cron: "17 6 * * 3"
+    - cron: "17 6 * * *"
   workflow_dispatch:
 
 jobs:

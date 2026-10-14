@@ -145,7 +145,7 @@ A free Supabase project **pauses after 7 days without activity** and stays down 
 someone restores it by hand. For a portfolio piece that means it breaks in exactly the
 week someone finally looks at it.
 
-`.github/workflows/keepalive.yml` pings the database weekly. Add two repository secrets
+`.github/workflows/keepalive.yml` pings the database daily. Add two repository secrets
 under **Settings → Secrets and variables → Actions**:
 
 - `SUPABASE_URL`
